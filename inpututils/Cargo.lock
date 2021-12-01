@@ -3,17 +3,5 @@
 version = 3
 
 [[package]]
-name = "AdventOfCode2021"
-version = "0.1.0"
-dependencies = [
- "day01",
- "inpututils",
-]
-
-[[package]]
-name = "day01"
-version = "0.1.0"
-
-[[package]]
 name = "inpututils"
 version = "0.1.0"
