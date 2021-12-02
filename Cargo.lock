@@ -7,11 +7,16 @@ name = "advent-of-code-2021"
 version = "0.1.0"
 dependencies = [
  "day01",
+ "day02",
  "inpututils",
 ]
 
 [[package]]
 name = "day01"
+version = "0.1.0"
+
+[[package]]
+name = "day02"
 version = "0.1.0"
 
 [[package]]
