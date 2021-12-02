@@ -8,7 +8,7 @@ fn main() {
 
     let day2_input = inpututils::read_all("inputs/day02");
     println!("Day 2 - Part 1: {}", day02::part1(&day2_input));
-    //println!("Day 2 - Part 2: {}", day01::part2(&day1_input));
+    println!("Day 2 - Part 2: {}", day02::part2(&day2_input));
 }
 
 #[cfg(test)]
