@@ -104,6 +104,16 @@ pub fn part2(depth: &[u32]) -> u32 {
     return count
 }
 
+pub fn part2_functional(depth: &[u32]) -> usize {
+    return depth
+        .windows(3)
+        .map(|window| window.iter().sum())
+        .collect::<Vec<u32>>()
+        .windows(2)
+        .filter(|pair| pair[1] > pair [0])
+        .count()
+}
+
 #[cfg(test)]
 mod tests_part2 {
     #[test]
@@ -111,5 +121,12 @@ mod tests_part2 {
         let sample_input = [199, 200, 208, 210, 200, 207, 240, 269, 260, 263];
         let sample_output = 5;
         assert_eq!(crate::part2(&sample_input), sample_output);
+    }
+
+    #[test]
+    fn test_part2_functional() {
+        let sample_input = [199, 200, 208, 210, 200, 207, 240, 269, 260, 263];
+        let sample_output = 5;
+        assert_eq!(crate::part2_functional(&sample_input), sample_output);
     }
 }
