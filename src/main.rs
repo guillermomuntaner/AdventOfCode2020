@@ -9,6 +9,9 @@ fn main() {
     let day2_input = inpututils::read_all("inputs/day02");
     println!("Day 2 - Part 1: {}", day02::part1(&day2_input));
     println!("Day 2 - Part 2: {}", day02::part2(&day2_input));
+
+    let day3_input = inpututils::read_all("inputs/day03");
+    println!("Day 3 - Part 1: {}", day03::part1(&day3_input));
 }
 
 #[cfg(test)]
@@ -46,4 +49,10 @@ mod tests {
     //    let input = inpututils::read_all_as::<u32>("inputs/day01");
     //    b.iter(|| day01::part2_functional(&input));
     //}
+
+    #[test]
+    fn test_day_02_part1() {
+        let day3_input = inpututils::read_all("inputs/day03");
+        assert_eq!(day03::part1(&day3_input), 1427868);
+    }
 }
