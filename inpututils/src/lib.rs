@@ -2,7 +2,7 @@ use std::str::FromStr;
 
 pub fn read_all(file_name: &str) -> Vec<String> {
     std::fs::read_to_string(file_name)
-        .expect("file not found!")
+        .unwrap_or_else(|_| panic!("file not found: {}", file_name))
         .lines()
         .map(|line| line.to_string())
         .collect()
