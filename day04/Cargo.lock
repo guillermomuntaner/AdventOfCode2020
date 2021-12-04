@@ -3,33 +3,10 @@
 version = 3
 
 [[package]]
-name = "advent-of-code-2021"
-version = "0.1.0"
-dependencies = [
- "day01",
- "day02",
- "day03",
- "day04",
- "inpututils",
-]
-
-[[package]]
 name = "array2d"
 version = "0.2.1"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "224b2db9d3e7dd068c8b07b186076ee668ce38810d0ba12c80dacbcbb7cfc9e8"
-
-[[package]]
-name = "day01"
-version = "0.1.0"
-
-[[package]]
-name = "day02"
-version = "0.1.0"
-
-[[package]]
-name = "day03"
-version = "0.1.0"
 
 [[package]]
 name = "day04"
@@ -37,7 +14,3 @@ version = "0.1.0"
 dependencies = [
  "array2d",
 ]
-
-[[package]]
-name = "inpututils"
-version = "0.1.0"
