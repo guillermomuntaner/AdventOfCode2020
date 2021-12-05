@@ -50,16 +50,6 @@ pub fn part1(depth: &[u32]) -> u32 {
     return count
 }
 
-#[cfg(test)]
-mod tests_part1 {
-    #[test]
-    fn test_part1() {
-        let sample_input = [199, 200, 208, 210, 200, 207, 240, 269, 260, 263];
-        let sample_output = 7;
-        assert_eq!(crate::part1(&sample_input), sample_output);
-    }
-}
-
 /// --- Part Two ---
 /// Considering every single measurement isn't as useful as you expected: there's just too much noise in the data.
 ///
@@ -116,6 +106,13 @@ pub fn part2_functional(depth: &[u32]) -> usize {
 
 #[cfg(test)]
 mod tests_part2 {
+    #[test]
+    fn test_part1() {
+        let sample_input = [199, 200, 208, 210, 200, 207, 240, 269, 260, 263];
+        let sample_output = 7;
+        assert_eq!(crate::part1(&sample_input), sample_output);
+    }
+
     #[test]
     fn test_part2() {
         let sample_input = [199, 200, 208, 210, 200, 207, 240, 269, 260, 263];

@@ -84,57 +84,36 @@ use array2d::Array2D;
 ///
 /// Calculate the horizontal position and depth you would have after following the planned course. What do you get if you multiply your final horizontal position by your final depth?
 pub fn part1(instructions: &[String]) -> u32 {
-    let mut iter = instructions.iter();
+    let (numbers, mut boards) = parse_game(instructions);
 
-    let bingo_numbers = iter.next().unwrap()
-        .split(',')
-        .map(|number| number.parse::<u32>().unwrap())
-        .collect::<Vec<u32>>();
-
-    iter.next().unwrap();
-
-    #[derive(PartialEq, Debug, Clone)]
-    struct BingoNumber {
-        number: u32,
-        isMarked: bool,
+    for number in numbers {
+        for board in &mut boards {
+            if scratch_number_and_call(number, board) {
+                return number * count_non_scratched(board)
+            }
+        }
     }
+    panic!("No winner")
+}
 
-    let mut bingo_boards: Vec<Array2D<BingoNumber>> = iter
-        .collect::<Vec<&String>>()
-        .split(|line| line.is_empty())
-        .map(|board_lines| board_lines
-            .iter()
-            .map(|board_line| board_line
-                .split_whitespace()
-                .map(|number| BingoNumber {
-                    number: number.parse::<u32>().unwrap(),
-                    isMarked: false
-                })
-                .collect::<Vec<BingoNumber>>()
-            )
-            .collect::<Vec<Vec<BingoNumber>>>()
-        )
-        .map(|boards| Array2D::<BingoNumber>::from_rows(&boards))
-        .collect();
-
-    for number in bingo_numbers {
-        'board_loop: for i in 0..bingo_boards.len() {
-            for x in 0..bingo_boards[i].num_columns() {
-                for y in 0..bingo_boards[i].num_rows() {
-                    if bingo_boards[i][(y, x)].number == number {
-                        bingo_boards[i][(y, x)].isMarked = true;
-                        // Only check if this board become a winner. Only need to check current x & y.
-                        if bingo_boards[i].column_iter(x).all(|bingoNumber| bingoNumber.isMarked)
-                            || bingo_boards[i].row_iter(y).all(|bingoNumber| bingoNumber.isMarked) {
-                            // Got a winner
-                            let unmarked_sum: u32 = bingo_boards[i].elements_column_major_iter()
-                                .filter(|bingo_number| bingo_number.isMarked == false)
-                                .map(|bingo_number| bingo_number.number)
-                                .sum();
-                            return unmarked_sum * number
-                        }
-                        continue 'board_loop;
-                    }
+/// --- Part Two ---
+/// On the other hand, it might be wise to try a different strategy: let the giant squid win.
+///
+/// You aren't sure how many bingo boards a giant squid could play at once, so rather than waste time counting its arms, the safe thing to do is to figure out which board will win last and choose that one. That way, no matter which boards it picks, it will win for sure.
+///
+/// In the above example, the second board is the last to win, which happens after 13 is eventually called and its middle column is completely marked. If you were to keep playing until this point, the second board would have a sum of unmarked numbers equal to 148 for a final score of 148 * 13 = 1924.
+///
+/// Figure out which board will win last. Once it wins, what would its final score be?
+pub fn part2(instructions: &[String]) -> u32 {
+    let (numbers, mut boards) = parse_game(instructions);
+    let mut board_has_won = vec![false; boards.len()];
+    for number in numbers {
+        for (i, board) in boards.iter_mut().enumerate() {
+            if board_has_won[i] { continue }
+            if scratch_number_and_call(number, board) {
+                board_has_won[i] = true;
+                if !board_has_won.contains(&false) {
+                    return number * count_non_scratched(board)
                 }
             }
         }
@@ -143,8 +122,49 @@ pub fn part1(instructions: &[String]) -> u32 {
     panic!("No winner")
 }
 
+fn parse_game(instructions: &[String]) -> (Vec<u32>, Vec<Array2D<Option<u32>>>){
+    let lines = instructions[0]
+        .split(',')
+        .map(|number| number.parse::<u32>().unwrap())
+        .collect();
+
+    let board = instructions[2..instructions.len()]
+        .split(|line| line.is_empty())
+        .map(|board_lines| board_lines
+            .iter()
+            .map(|board_line| board_line
+                .split_whitespace()
+                .map(|number| number.parse::<u32>().unwrap())
+                .map(|number| Some(number))
+                .collect::<Vec<Option<u32>>>()
+            )
+            .collect::<Vec<Vec<Option<u32>>>>()
+        )
+        .map(|board| Array2D::<Option<u32>>::from_rows(&board))
+        .collect();
+
+    return (lines, board)
+}
+
+fn scratch_number_and_call(number: u32, board: &mut Array2D<Option<u32>>) -> bool {
+    for x in 0..board.num_columns() {
+        for y in 0..board.num_rows() {
+            if board[(y, x)] == Some(number) {
+                board[(y, x)] = None;
+                return board.column_iter(x).all(|number| number.is_none())
+                    || board.row_iter(y).all(|number| number.is_none())
+            }
+        }
+    }
+    return false
+}
+
+fn count_non_scratched(board: &Array2D<Option<u32>>) -> u32 {
+    board.elements_column_major_iter().filter_map(|number| *number).sum()
+}
+
 #[cfg(test)]
-mod tests_part1 {
+mod tests {
     #[test]
     fn test_part1() {
         let input = "7,4,9,5,11,17,23,2,0,14,21,24,10,16,13,6,15,25,12,22,18,20,8,19,3,26,1
@@ -169,5 +189,31 @@ mod tests_part1 {
         let sample_input: Vec<String> = input.lines().map(|line| line.to_string()).collect();
         let sample_output = 4512;
         assert_eq!(crate::part1(&sample_input), sample_output);
+    }
+
+    #[test]
+    fn test_part2() {
+        let input = "7,4,9,5,11,17,23,2,0,14,21,24,10,16,13,6,15,25,12,22,18,20,8,19,3,26,1
+
+22 13 17 11  0
+ 8  2 23  4 24
+21  9 14 16  7
+ 6 10  3 18  5
+ 1 12 20 15 19
+
+ 3 15  0  2 22
+ 9 18 13 17  5
+19  8  7 25 23
+20 11 10 24  4
+14 21 16 12  6
+
+14 21 17 24  4
+10 16 15  9 19
+18  8 23 26 20
+22 11 13  6  5
+ 2  0 12  3  7";
+        let sample_input: Vec<String> = input.lines().map(|line| line.to_string()).collect();
+        let sample_output = 1924;
+        assert_eq!(crate::part2(&sample_input), sample_output);
     }
 }

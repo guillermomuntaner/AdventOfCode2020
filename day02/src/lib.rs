@@ -28,7 +28,7 @@
 ///
 /// Calculate the horizontal position and depth you would have after following the planned course. What do you get if you multiply your final horizontal position by your final depth?
 pub fn part1(instructions: &[String]) -> i32 {
-    let finalPosition = instructions
+    let final_position = instructions
         .iter()
         .fold((0,0), |position, instruction| {
             let parts = instruction.split(" ").collect::<Vec<&str>>();
@@ -42,18 +42,7 @@ pub fn part1(instructions: &[String]) -> i32 {
             }
         });
 
-    return finalPosition.0 * finalPosition.1
-}
-
-#[cfg(test)]
-mod tests_part1 {
-    #[test]
-    fn test_part1() {
-        let sample_input: Vec<String> = vec!["forward 5", "down 5", "forward 8", "up 3", "down 8", "forward 2"]
-            .iter().map(|line| line.to_string()).collect();
-        let sample_output = 150;
-        assert_eq!(crate::part1(&sample_input), sample_output);
-    }
+    return final_position.0 * final_position.1
 }
 
 /// --- Part Two ---
@@ -80,7 +69,7 @@ mod tests_part1 {
 ///
 /// Using this new interpretation of the commands, calculate the horizontal position and depth you would have after following the planned course. What do you get if you multiply your final horizontal position by your final depth?
 pub fn part2(instructions: &[String]) -> i32 {
-    let finalPosition = instructions
+    let final_position = instructions
         .iter()
         .fold((0,0,0), |position, instruction| {
             let parts = instruction.split(" ").collect::<Vec<&str>>();
@@ -94,11 +83,19 @@ pub fn part2(instructions: &[String]) -> i32 {
             }
         });
 
-    return finalPosition.0 * finalPosition.1
+    return final_position.0 * final_position.1
 }
 
 #[cfg(test)]
-mod tests_part2 {
+mod tests {
+    #[test]
+    fn test_part1() {
+        let sample_input: Vec<String> = vec!["forward 5", "down 5", "forward 8", "up 3", "down 8", "forward 2"]
+            .iter().map(|line| line.to_string()).collect();
+        let sample_output = 150;
+        assert_eq!(crate::part1(&sample_input), sample_output);
+    }
+
     #[test]
     fn test_part2() {
         let sample_input: Vec<String> = vec!["forward 5", "down 5", "forward 8", "up 3", "down 8", "forward 2"]
