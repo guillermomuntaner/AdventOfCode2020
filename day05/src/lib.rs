@@ -1,4 +1,16 @@
+use std::cmp::max;
 use std::collections::HashMap;
+
+#[derive(PartialEq, Eq, Hash, Clone, Copy)]
+struct Point {
+    x: i32,
+    y: i32
+}
+
+struct Segment {
+    i: Point,
+    f: Point
+}
 
 /// --- Day 5: Hydrothermal Venture ---
 /// You come across a field of hydrothermal vents on the ocean floor! These vents constantly produce large, opaque clouds, so it would be best to avoid them if possible.
@@ -39,49 +51,75 @@ use std::collections::HashMap;
 ///
 /// Consider only horizontal and vertical lines. At how many points do at least two lines overlap?
 pub fn part1(instructions: &[String]) -> usize {
-    type Point = (u32, u32);
-    type Segment = (Point, Point);
+    let segments = parse_segments(instructions);
+    count_dangerous_areas(&segments, false)
+}
 
-    let segments = instructions
-        .iter()
-        .map(|line| {
-            let points = line.split(" -> ")
-                .map(|coordinate| {
-                    let coordinates = coordinate.split(',')
-                        .map(|part| part.parse::<u32>().unwrap())
-                        .collect::<Vec<u32>>();
-                    return (coordinates[0], coordinates[1])
-                })
-                .collect::<Vec<Point>>();
-            return (points[0], points[1])
-        })
-        .collect::<Vec<Segment>>();
+/// --- Part Two ---
+/// Unfortunately, considering only horizontal and vertical lines doesn't give you the full picture; you need to also consider diagonal lines.
+///
+/// Because of the limits of the hydrothermal vent mapping system, the lines in your list will only ever be horizontal, vertical, or a diagonal line at exactly 45 degrees. In other words:
+///
+/// An entry like 1,1 -> 3,3 covers points 1,1, 2,2, and 3,3.
+/// An entry like 9,7 -> 7,9 covers points 9,7, 8,8, and 7,9.
+/// Considering all lines from the above example would now produce the following diagram:
+///
+/// 1.1....11.
+/// .111...2..
+/// ..2.1.111.
+/// ...1.2.2..
+/// .112313211
+/// ...1.2....
+/// ..1...1...
+/// .1.....1..
+/// 1.......1.
+/// 222111....
+/// You still need to determine the number of points where at least two lines overlap. In the above example, this is still anywhere in the diagram with a 2 or larger - now a total of 12 points.
+///
+/// Consider all of the lines. At how many points do at least two lines overlap?
+pub fn part2(instructions: &[String]) -> usize {
+    let segments = parse_segments(instructions);
+    count_dangerous_areas(&segments, true)
+}
 
-    let mut memory = HashMap::<Point, u32>::new();
+fn count_dangerous_areas(segments: &Vec<Segment>, count_diagonally: bool) -> usize {
+    let mut memory = HashMap::<Point, i32>::new();
 
     for segment in segments {
-        let x1 = segment.0.0;
-        let y1 = segment.0.1;
-        let x2 = segment.1.0;
-        let y2 = segment.1.1;
+        let x_distance = segment.f.x - segment.i.x;
+        let x_direction = x_distance.signum();
+        let width = x_distance * x_distance.signum();
 
-        if x1 == x2 {
-            let y_range = if y1 < y2 { y1..=y2 } else { y2..=y1 };
-            for y in y_range {
-                *memory.entry((x1, y)).or_insert(0) += 1;
-            }
-        } else if y1 == y2 {
-            let x_range = if x1 < x2 { x1..=x2 } else { x2..=x1 };
-            for x in x_range {
-                *memory.entry((x, y1)).or_insert(0) += 1;
+        let y_distance = segment.f.y - segment.i.y;
+        let y_direction = y_distance.signum();
+        let height = y_distance * y_direction.signum();
+
+        if width == 0 || height == 0 || (count_diagonally && width == height) {
+            for offset in 0..=max(width, height) {
+                let x = segment.i.x + offset * x_direction;
+                let y = segment.i.y + offset * y_direction;
+                *memory.entry(Point { x: x, y: y }).or_insert(0) += 1;
             }
         }
     }
     memory.iter().filter(|&(_, count)| *count >= 2).count()
 }
 
-pub fn part2(instructions: &[String]) -> u32 {
-    0
+fn parse_segments(instructions: &[String]) -> Vec<Segment> {
+    instructions
+        .iter()
+        .map(|line| {
+            let points = line.split(" -> ")
+                .map(|coordinate| {
+                    let coordinates = coordinate.split(',')
+                        .map(|part| part.parse::<i32>().unwrap())
+                        .collect::<Vec<i32>>();
+                    Point { x: coordinates[0], y: coordinates[1] }
+                })
+                .collect::<Vec<Point>>();
+            Segment { i: points[0], f: points[1] }
+        })
+        .collect::<Vec<Segment>>()
 }
 
 #[cfg(test)]
@@ -105,27 +143,18 @@ mod tests {
 
     #[test]
     fn test_part2() {
-        let input = "7,4,9,5,11,17,23,2,0,14,21,24,10,16,13,6,15,25,12,22,18,20,8,19,3,26,1
-
-22 13 17 11  0
- 8  2 23  4 24
-21  9 14 16  7
- 6 10  3 18  5
- 1 12 20 15 19
-
- 3 15  0  2 22
- 9 18 13 17  5
-19  8  7 25 23
-20 11 10 24  4
-14 21 16 12  6
-
-14 21 17 24  4
-10 16 15  9 19
-18  8 23 26 20
-22 11 13  6  5
- 2  0 12  3  7";
+        let input = "0,9 -> 5,9
+8,0 -> 0,8
+9,4 -> 3,4
+2,2 -> 2,1
+7,0 -> 7,4
+6,4 -> 2,0
+0,9 -> 2,9
+3,4 -> 1,4
+0,0 -> 8,8
+5,5 -> 8,2";
         let sample_input: Vec<String> = input.lines().map(|line| line.to_string()).collect();
-        let sample_output = 1924;
+        let sample_output = 12;
         assert_eq!(crate::part2(&sample_input), sample_output);
     }
 }

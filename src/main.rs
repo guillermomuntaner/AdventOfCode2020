@@ -54,7 +54,7 @@ mod tests {
     #[test]
     fn test_day_05() {
         let input = inpututils::read_all("inputs/day05");
-        assert_eq!(day05::part1(&input), 0);
-        assert_eq!(day05::part2(&input), 0);
+        assert_eq!(day05::part1(&input), 7436);
+        assert_eq!(day05::part2(&input), 21104);
     }
 }
