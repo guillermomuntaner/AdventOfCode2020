@@ -48,24 +48,39 @@
 ///
 /// Find a way to simulate lanternfish. How many lanternfish would there be after 80 days?
 pub fn part1(instructions: &[u8]) -> usize {
-    let mut vec = instructions.into_iter().cloned().collect::<Vec<u8>>();
-
-    for _ in 0..80 {
-        for i in 0..vec.len() {
-            if vec[i] == 0 {
-                vec[i] = 6;
-                vec.push(8);
-            } else {
-                vec[i] -= 1;
-            }
-        }
-    }
-
-    return vec.len()
+    return reproduce(instructions, 80);
 }
 
+/// --- Part Two ---
+/// Suppose the lanternfish live forever and have unlimited food and space. Would they take over the entire ocean?
+///
+/// After 256 days in the example above, there would be a total of 26984457539 lanternfish!
+///
+/// How many lanternfish would there be after 256 days?
 pub fn part2(instructions: &[u8]) -> usize {
-    1
+    return reproduce(instructions, 256);
+}
+
+fn reproduce(vec: &[u8], days: u32) -> usize {
+    let mut total = 0;
+
+    // Store as count of fishes by pending days to reproduce
+    // This reduces the complexity to the number of days
+    let mut histogram = vec![0; 9];
+    for days_to_reproduce in vec {
+        histogram[*days_to_reproduce as usize] += 1
+    }
+
+    for day in 0..days {
+        let current_histogram = histogram.clone();
+        for i in 1..9 {
+            histogram[i-1] = current_histogram[i]
+        }
+        histogram[6] += current_histogram[0];
+        histogram[8] = current_histogram[0];
+    }
+
+    histogram.iter().sum()
 }
 
 #[cfg(test)]
@@ -86,7 +101,7 @@ mod tests {
         let sample_input: Vec<u8> = input.split(',')
             .map(|number| number.parse::<u8>().unwrap())
             .collect::<Vec<u8>>();
-        let sample_output = 5934;
+        let sample_output = 26984457539;
         assert_eq!(crate::part2(&sample_input), sample_output);
     }
 }
