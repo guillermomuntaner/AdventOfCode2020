@@ -18,6 +18,14 @@ fn main() {
     let day5_input = inpututils::read_all("inputs/day05");
     println!("Day 5 - Part 1: {}", day05::part1(&day5_input));
     println!("Day 5 - Part 1: {}", day05::part2(&day5_input));
+
+    let day6_input = std::fs::read_to_string("inputs/day06")
+        .unwrap_or_else(|_| panic!("file not found: {}", "inputs/day06"))
+        .split(',')
+        .map(|number| number.parse::<u8>().unwrap())
+        .collect::<Vec<u8>>();
+    println!("Day 6 - Part 1: {}", day06::part1(&day6_input));
+    println!("Day 6 - Part 1: {}", day06::part2(&day6_input));
 }
 
 #[cfg(test)]
@@ -56,5 +64,12 @@ mod tests {
         let input = inpututils::read_all("inputs/day05");
         assert_eq!(day05::part1(&input), 7436);
         assert_eq!(day05::part2(&input), 21104);
+    }
+
+    #[test]
+    fn test_day_06() {
+        let input = inpututils::read_all("inputs/day06");
+        assert_eq!(day06::part1(&input), 0);
+        assert_eq!(day06::part2(&input), 0);
     }
 }
