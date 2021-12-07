@@ -23,7 +23,7 @@ fn main() {
     println!("Day 6 - Part 1: {}", day06::part1(&day6_input));
     println!("Day 6 - Part 2: {}", day06::part2(&day6_input));
 
-    let day7_input = inpututils::read_comma_separated_as::<u32>("inputs/day07");
+    let day7_input = inpututils::read_comma_separated_as::<u64>("inputs/day07");
     println!("Day 7 - Part 1: {}", day07::part1(&day7_input));
     println!("Day 7 - Part 2: {}", day07::part2(&day7_input));
 }

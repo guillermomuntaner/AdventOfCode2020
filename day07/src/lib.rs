@@ -78,22 +78,55 @@
 /// In this example, after 18 days, there are a total of 26 fish. After 80 days, there would be a total of 5934.
 ///
 /// Find a way to simulate lanternfish. How many lanternfish would there be after 80 days?
-pub fn part1(instructions: &[u32]) -> u32 {
+pub fn part1(instructions: &[u64]) -> u64 {
     let min = instructions.iter().min().unwrap();
     let max = instructions.iter().max().unwrap();
     return (*min..=*max)
         .map(|position| {
-            instructions.iter().map(|val| abs_diff(position, *val)).sum::<u32>()
+            instructions
+                .iter()
+                .map(|val| abs_diff(position, *val))
+                .sum::<u64>()
         })
         .min()
         .unwrap()
 }
 
-pub fn part2(instructions: &[u32]) -> usize {
-    return 0
+/// --- Part Two ---
+/// The crabs don't seem interested in your proposed solution. Perhaps you misunderstand crab engineering?
+///
+/// As it turns out, crab submarine engines don't burn fuel at a constant rate. Instead, each change of 1 step in horizontal position costs 1 more unit of fuel than the last: the first step costs 1, the second step costs 2, the third step costs 3, and so on.
+///
+/// As each crab moves, moving further becomes more expensive. This changes the best horizontal position to align them all on; in the example above, this becomes 5:
+///
+/// Move from 16 to 5: 66 fuel
+/// Move from 1 to 5: 10 fuel
+/// Move from 2 to 5: 6 fuel
+/// Move from 0 to 5: 15 fuel
+/// Move from 4 to 5: 1 fuel
+/// Move from 2 to 5: 6 fuel
+/// Move from 7 to 5: 3 fuel
+/// Move from 1 to 5: 10 fuel
+/// Move from 2 to 5: 6 fuel
+/// Move from 14 to 5: 45 fuel
+/// This costs a total of 168 fuel. This is the new cheapest possible outcome; the old alignment position (2) now costs 206 fuel instead.
+///
+/// Determine the horizontal position that the crabs can align to using the least fuel possible so they can make you an escape route! How much fuel must they spend to align to that position?
+pub fn part2(instructions: &[u64]) -> u64 {
+    let min = instructions.iter().min().unwrap();
+    let max = instructions.iter().max().unwrap();
+    return (*min..=*max)
+        .map(|position| {
+            instructions
+                .iter()
+                .map(|val| fuel(abs_diff(position, *val)))
+                .sum::<u64>()
+        })
+        .min()
+        .unwrap()
 }
 
-fn abs_diff(slf: u32, other: u32)  -> u32 {
+fn abs_diff(slf: u64, other: u64)  -> u64 {
     if slf < other {
         other - slf
     } else {
@@ -101,14 +134,23 @@ fn abs_diff(slf: u32, other: u32)  -> u32 {
     }
 }
 
+fn fuel(n: u64) -> u64 {
+    if n < 2 {
+        1
+    } else {
+        n + fuel(n - 1)
+    }
+}
+
 #[cfg(test)]
 mod tests {
+
     #[test]
     fn test_part1() {
         let input = "16,1,2,0,4,2,7,1,2,14";
-        let sample_input: Vec<u8> = input.split(',')
-            .map(|number| number.parse::<u8>().unwrap())
-            .collect::<Vec<u8>>();
+        let sample_input: Vec<u64> = input.split(',')
+            .map(|number| number.parse::<u64>().unwrap())
+            .collect::<Vec<u64>>();
         let sample_output = 37;
         assert_eq!(crate::part1(&sample_input), sample_output);
     }
@@ -116,10 +158,18 @@ mod tests {
     #[test]
     fn test_part2() {
         let input = "16,1,2,0,4,2,7,1,2,14";
-        let sample_input: Vec<u8> = input.split(',')
-            .map(|number| number.parse::<u8>().unwrap())
-            .collect::<Vec<u8>>();
-        let sample_output = 26984457539;
+        let sample_input: Vec<u64> = input.split(',')
+            .map(|number| number.parse::<u64>().unwrap())
+            .collect::<Vec<u64>>();
+        let sample_output = 168;
         assert_eq!(crate::part2(&sample_input), sample_output);
+    }
+
+    #[test]
+    fn test_factorial() {
+        assert_eq!(crate::fuel(1), 1);
+        assert_eq!(crate::fuel(2), 2 + 1);
+        assert_eq!(crate::fuel(3), 3 + 2 + 1);
+        assert_eq!(crate::fuel(4), 4 + 3 + 2 + 1);
     }
 }
