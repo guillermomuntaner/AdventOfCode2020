@@ -96,6 +96,19 @@ fn day6_benchmark(c: &mut Criterion) {
     }));
 }
 
+fn day7_benchmark(c: &mut Criterion) {
+    let input = inpututils::read_comma_separated_as::<u64>("inputs/day07");
+    c.bench_function("Day 7 - Read input", |b| b.iter(|| {
+        inpututils::read_comma_separated_as::<u64>("inputs/day07");
+    }));
+    c.bench_function("Day 7 - Part 1", |b| b.iter(|| {
+        day07::part1(&input);
+    }));
+    c.bench_function("Day 7 - Part 2", |b| b.iter(|| {
+        day07::part2(&input);
+    }));
+}
+
 criterion_group!(
     benchmark,
     day1_benchmark,
@@ -103,6 +116,7 @@ criterion_group!(
     day3_benchmark,
     day4_benchmark,
     day5_benchmark,
-    day6_benchmark
+    day6_benchmark,
+    day7_benchmark
 );
 criterion_main!(benchmark);
