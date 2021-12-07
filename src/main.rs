@@ -13,15 +13,19 @@ fn main() {
 
     let day4_input = inpututils::read_lines("inputs/day04");
     println!("Day 4 - Part 1: {}", day04::part1(&day4_input));
-    println!("Day 4 - Part 1: {}", day04::part2(&day4_input));
+    println!("Day 4 - Part 2: {}", day04::part2(&day4_input));
 
     let day5_input = inpututils::read_lines("inputs/day05");
     println!("Day 5 - Part 1: {}", day05::part1(&day5_input));
-    println!("Day 5 - Part 1: {}", day05::part2(&day5_input));
+    println!("Day 5 - Part 2: {}", day05::part2(&day5_input));
 
     let day6_input = inpututils::read_comma_separated_as::<u8>("inputs/day06");
     println!("Day 6 - Part 1: {}", day06::part1(&day6_input));
-    println!("Day 6 - Part 1: {}", day06::part2(&day6_input));
+    println!("Day 6 - Part 2: {}", day06::part2(&day6_input));
+
+    let day7_input = inpututils::read_comma_separated_as::<u32>("inputs/day07");
+    println!("Day 7 - Part 1: {}", day07::part1(&day7_input));
+    println!("Day 7 - Part 2: {}", day07::part2(&day7_input));
 }
 
 #[cfg(test)]
