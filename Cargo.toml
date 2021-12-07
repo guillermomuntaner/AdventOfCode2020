@@ -13,3 +13,10 @@ day03 = { path = "day03" }
 day04 = { path = "day04" }
 day05 = { path = "day05" }
 day06 = { path = "day06" }
+
+[dev-dependencies]
+criterion = "0.3"
+
+[[bench]]
+name = "benchmark"
+harness = false

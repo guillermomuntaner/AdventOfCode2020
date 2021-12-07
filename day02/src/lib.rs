@@ -45,6 +45,48 @@ pub fn part1(instructions: &[String]) -> i32 {
     return final_position.0 * final_position.1
 }
 
+pub fn part1_iter<'a>(instructions: impl Iterator<Item = &'a str>) -> i32 {
+    let final_position = instructions
+        .into_iter()
+        .fold((0,0), |position, instruction| {
+            let parts = instruction.split(" ").collect::<Vec<&str>>();
+            let direction = parts[0];
+            let quantity = parts[1].parse::<i32>().unwrap();
+            return match direction {
+                "forward" => (position.0 + quantity, position.1),
+                "down" => (position.0, position.1 + quantity),
+                "up" => (position.0, position.1 - quantity),
+                _ => panic!("Unexpected direction"),
+            }
+        });
+
+    return final_position.0 * final_position.1
+}
+
+use lazy_static::lazy_static;
+use regex::{Captures, Regex};
+
+pub fn part1_with_regex(instructions: &[String]) -> i32 {
+    lazy_static! {
+        static ref REGEX: Regex = Regex::new(r"(forward|down|up) (\d+)").unwrap();
+    }
+    let final_position = instructions
+        .iter()
+        .fold((0,0), |position, instruction| {
+            let cap: Captures = REGEX.captures(instruction)
+                .unwrap_or_else(|| panic!("Unexpected line: {}", instruction));
+            let direction = cap.get(1).unwrap().as_str();
+            let quantity = cap.get(2).unwrap().as_str().parse::<i32>().unwrap();
+            return match direction {
+                "forward" => (position.0 + quantity, position.1),
+                "down" => (position.0, position.1 + quantity),
+                "up" => (position.0, position.1 - quantity),
+                _ => panic!("Unexpected direction"),
+            }
+        });
+
+    return final_position.0 * final_position.1
+}
 /// --- Part Two ---
 /// Based on your calculations, the planned course doesn't seem to make any sense. You find the submarine manual and discover that the process is actually slightly more complicated.
 ///

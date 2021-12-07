@@ -50,6 +50,22 @@ pub fn part1(depth: &[u32]) -> u32 {
     return count
 }
 
+
+pub fn part1_iter<'a>(instructions: impl Iterator<Item = &'a str>) -> i32 {
+    let mut prev: Option<&str> = None;
+    let mut count = 0;
+    for instruction in instructions {
+        match prev {
+            Some(prev) => if instruction > prev {
+                count += 1
+            },
+            None => {},
+        }
+        prev = Some(instruction)
+    }
+    return count
+}
+
 /// --- Part Two ---
 /// Considering every single measurement isn't as useful as you expected: there's just too much noise in the data.
 ///
@@ -105,7 +121,7 @@ pub fn part2_functional(depth: &[u32]) -> usize {
 }
 
 #[cfg(test)]
-mod tests_part2 {
+mod tests {
     #[test]
     fn test_part1() {
         let sample_input = [199, 200, 208, 210, 200, 207, 240, 269, 260, 263];
