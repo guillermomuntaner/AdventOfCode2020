@@ -89,7 +89,7 @@ pub fn part1(instructions: &[String]) -> u32 {
     for number in numbers {
         for board in &mut boards {
             if scratch_number_and_call(number, board) {
-                return number * count_non_scratched(board)
+                return number * count_non_scratched(board);
             }
         }
     }
@@ -109,11 +109,13 @@ pub fn part2(instructions: &[String]) -> u32 {
     let mut board_has_won = vec![false; boards.len()];
     for number in numbers {
         for (i, board) in boards.iter_mut().enumerate() {
-            if board_has_won[i] { continue }
+            if board_has_won[i] {
+                continue;
+            }
             if scratch_number_and_call(number, board) {
                 board_has_won[i] = true;
                 if !board_has_won.contains(&false) {
-                    return number * count_non_scratched(board)
+                    return number * count_non_scratched(board);
                 }
             }
         }
@@ -122,7 +124,7 @@ pub fn part2(instructions: &[String]) -> u32 {
     panic!("No winner")
 }
 
-fn parse_game(instructions: &[String]) -> (Vec<u32>, Vec<Array2D<Option<u32>>>){
+fn parse_game(instructions: &[String]) -> (Vec<u32>, Vec<Array2D<Option<u32>>>) {
     let lines = instructions[0]
         .split(',')
         .map(|number| number.parse::<u32>().unwrap())
@@ -130,20 +132,22 @@ fn parse_game(instructions: &[String]) -> (Vec<u32>, Vec<Array2D<Option<u32>>>){
 
     let board = instructions[2..instructions.len()]
         .split(|line| line.is_empty())
-        .map(|board_lines| board_lines
-            .iter()
-            .map(|board_line| board_line
-                .split_whitespace()
-                .map(|number| number.parse::<u32>().unwrap())
-                .map(|number| Some(number))
-                .collect::<Vec<Option<u32>>>()
-            )
-            .collect::<Vec<Vec<Option<u32>>>>()
-        )
+        .map(|board_lines| {
+            board_lines
+                .iter()
+                .map(|board_line| {
+                    board_line
+                        .split_whitespace()
+                        .map(|number| number.parse::<u32>().unwrap())
+                        .map(|number| Some(number))
+                        .collect::<Vec<Option<u32>>>()
+                })
+                .collect::<Vec<Vec<Option<u32>>>>()
+        })
         .map(|board| Array2D::<Option<u32>>::from_rows(&board))
         .collect();
 
-    return (lines, board)
+    return (lines, board);
 }
 
 fn scratch_number_and_call(number: u32, board: &mut Array2D<Option<u32>>) -> bool {
@@ -152,15 +156,18 @@ fn scratch_number_and_call(number: u32, board: &mut Array2D<Option<u32>>) -> boo
             if board[(y, x)] == Some(number) {
                 board[(y, x)] = None;
                 return board.column_iter(x).all(|number| number.is_none())
-                    || board.row_iter(y).all(|number| number.is_none())
+                    || board.row_iter(y).all(|number| number.is_none());
             }
         }
     }
-    return false
+    return false;
 }
 
 fn count_non_scratched(board: &Array2D<Option<u32>>) -> u32 {
-    board.elements_column_major_iter().filter_map(|number| *number).sum()
+    board
+        .elements_column_major_iter()
+        .filter_map(|number| *number)
+        .sum()
 }
 
 #[cfg(test)]

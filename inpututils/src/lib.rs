@@ -33,8 +33,7 @@ pub fn read_comma_separated_as<T: FromStr>(file_name: &str) -> Vec<T> {
 // Reference based methods. The called holds the file string & everything is borrowed from there.
 
 pub fn read_file(file_name: &str) -> String {
-    std::fs::read_to_string(file_name)
-        .expect("file not found!")
+    std::fs::read_to_string(file_name).expect("file not found!")
 }
 
 pub fn lines(string: &String) -> impl Iterator<Item = &str> {

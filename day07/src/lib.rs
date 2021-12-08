@@ -33,7 +33,10 @@ pub fn part1(crabs: &mut [u64]) -> u64 {
     // Note: select_nth_unstable is a faster alternative to find the nth sorted element.
     // It doesn't sort the whole array, just enought to grant the solicited index & is optimized for it.
     let median = *crabs.select_nth_unstable(crabs.len() / 2).1;
-    return crabs.iter().map(|crab| abs_diff(*crab, median)).sum::<u64>()
+    return crabs
+        .iter()
+        .map(|crab| abs_diff(*crab, median))
+        .sum::<u64>();
 }
 
 pub fn part1_naive(crabs: &[u64]) -> u64 {
@@ -47,7 +50,7 @@ pub fn part1_naive(crabs: &[u64]) -> u64 {
                 .sum::<u64>()
         })
         .min()
-        .unwrap()
+        .unwrap();
 }
 
 /// --- Part Two ---
@@ -75,7 +78,7 @@ pub fn part2(instructions: &[u64]) -> u64 {
     // Its 1st derivative is (2n+1)/2 or n + 1/2
     // So it must be close to the average, but might be a bit off
     let average = instructions.iter().sum::<u64>() / instructions.len() as u64;
-    return (average-1..average+1)
+    return (average - 1..average + 1)
         .map(|position| {
             instructions
                 .iter()
@@ -83,7 +86,7 @@ pub fn part2(instructions: &[u64]) -> u64 {
                 .sum::<u64>()
         })
         .min()
-        .unwrap()
+        .unwrap();
 }
 
 pub fn part2_naive(instructions: &[u64]) -> u64 {
@@ -97,10 +100,10 @@ pub fn part2_naive(instructions: &[u64]) -> u64 {
                 .sum::<u64>()
         })
         .min()
-        .unwrap()
+        .unwrap();
 }
 
-fn abs_diff(slf: u64, other: u64)  -> u64 {
+fn abs_diff(slf: u64, other: u64) -> u64 {
     if slf < other {
         other - slf
     } else {
@@ -110,9 +113,10 @@ fn abs_diff(slf: u64, other: u64)  -> u64 {
 
 fn fuel(n: u64) -> u64 {
     // Gauss
-    n*(n + 1)/2
+    n * (n + 1) / 2
 }
 
+#[allow(dead_code)]
 fn fuel_naive(n: u64) -> u64 {
     if n < 2 {
         1
@@ -127,7 +131,8 @@ mod tests {
     #[test]
     fn test_part1() {
         let input = "16,1,2,0,4,2,7,1,2,14";
-        let mut sample_input: Vec<u64> = input.split(',')
+        let mut sample_input: Vec<u64> = input
+            .split(',')
             .map(|number| number.parse::<u64>().unwrap())
             .collect::<Vec<u64>>();
         let sample_output = 37;
@@ -137,7 +142,8 @@ mod tests {
     #[test]
     fn test_part1_naive() {
         let input = "16,1,2,0,4,2,7,1,2,14";
-        let sample_input: Vec<u64> = input.split(',')
+        let sample_input: Vec<u64> = input
+            .split(',')
             .map(|number| number.parse::<u64>().unwrap())
             .collect::<Vec<u64>>();
         let sample_output = 37;
@@ -147,7 +153,8 @@ mod tests {
     #[test]
     fn test_part2() {
         let input = "16,1,2,0,4,2,7,1,2,14";
-        let sample_input: Vec<u64> = input.split(',')
+        let sample_input: Vec<u64> = input
+            .split(',')
             .map(|number| number.parse::<u64>().unwrap())
             .collect::<Vec<u64>>();
         let sample_output = 168;
@@ -157,7 +164,8 @@ mod tests {
     #[test]
     fn test_part2_naive() {
         let input = "16,1,2,0,4,2,7,1,2,14";
-        let sample_input: Vec<u64> = input.split(',')
+        let sample_input: Vec<u64> = input
+            .split(',')
             .map(|number| number.parse::<u64>().unwrap())
             .collect::<Vec<u64>>();
         let sample_output = 168;

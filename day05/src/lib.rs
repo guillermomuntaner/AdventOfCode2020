@@ -4,12 +4,12 @@ use std::collections::HashMap;
 #[derive(PartialEq, Eq, Hash, Clone, Copy)]
 struct Point {
     x: i32,
-    y: i32
+    y: i32,
 }
 
 struct Segment {
     i: Point,
-    f: Point
+    f: Point,
 }
 
 /// --- Day 5: Hydrothermal Venture ---
@@ -109,15 +109,23 @@ fn parse_segments(instructions: &[String]) -> Vec<Segment> {
     instructions
         .iter()
         .map(|line| {
-            let points = line.split(" -> ")
+            let points = line
+                .split(" -> ")
                 .map(|coordinate| {
-                    let coordinates = coordinate.split(',')
+                    let coordinates = coordinate
+                        .split(',')
                         .map(|part| part.parse::<i32>().unwrap())
                         .collect::<Vec<i32>>();
-                    Point { x: coordinates[0], y: coordinates[1] }
+                    Point {
+                        x: coordinates[0],
+                        y: coordinates[1],
+                    }
                 })
                 .collect::<Vec<Point>>();
-            Segment { i: points[0], f: points[1] }
+            Segment {
+                i: points[0],
+                f: points[1],
+            }
         })
         .collect::<Vec<Segment>>()
 }

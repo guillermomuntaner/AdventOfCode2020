@@ -43,27 +43,28 @@
 pub fn part1(depth: &[u32]) -> u32 {
     let mut count = 0;
     for i in 1..depth.len() {
-        if depth[i] > depth[i-1] {
+        if depth[i] > depth[i - 1] {
             count += 1
         }
     }
-    return count
+    return count;
 }
-
 
 pub fn part1_iter<'a>(instructions: impl Iterator<Item = &'a str>) -> i32 {
     let mut prev: Option<&str> = None;
     let mut count = 0;
     for instruction in instructions {
         match prev {
-            Some(prev) => if instruction > prev {
-                count += 1
-            },
-            None => {},
+            Some(prev) => {
+                if instruction > prev {
+                    count += 1
+                }
+            }
+            None => {}
         }
         prev = Some(instruction)
     }
-    return count
+    return count;
 }
 
 /// --- Part Two ---
@@ -101,13 +102,13 @@ pub fn part1_iter<'a>(instructions: impl Iterator<Item = &'a str>) -> i32 {
 pub fn part2(depth: &[u32]) -> u32 {
     let mut count = 0;
     for i in 3..depth.len() {
-        let window1 = depth[i-1] + depth[i-2] + depth[i-3];
-        let window2 = depth[i] + depth[i-1] + depth[i-2];
+        let window1 = depth[i - 1] + depth[i - 2] + depth[i - 3];
+        let window2 = depth[i] + depth[i - 1] + depth[i - 2];
         if window2 > window1 {
             count += 1
         }
     }
-    return count
+    return count;
 }
 
 pub fn part2_functional(depth: &[u32]) -> usize {
@@ -116,8 +117,8 @@ pub fn part2_functional(depth: &[u32]) -> usize {
         .map(|window| window.iter().sum())
         .collect::<Vec<u32>>()
         .windows(2)
-        .filter(|pair| pair[1] > pair [0])
-        .count()
+        .filter(|pair| pair[1] > pair[0])
+        .count();
 }
 
 #[cfg(test)]

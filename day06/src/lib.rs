@@ -62,8 +62,6 @@ pub fn part2(instructions: &[u8]) -> usize {
 }
 
 fn reproduce(vec: &[u8], days: u32) -> usize {
-    let mut total = 0;
-
     // Store as count of fishes by pending days to reproduce
     // This reduces the complexity to the number of days
     let mut histogram = vec![0; 9];
@@ -71,10 +69,10 @@ fn reproduce(vec: &[u8], days: u32) -> usize {
         histogram[*days_to_reproduce as usize] += 1
     }
 
-    for day in 0..days {
+    for _ in 0..days {
         let current_histogram = histogram.clone();
         for i in 1..9 {
-            histogram[i-1] = current_histogram[i]
+            histogram[i - 1] = current_histogram[i]
         }
         histogram[6] += current_histogram[0];
         histogram[8] = current_histogram[0];
@@ -88,7 +86,8 @@ mod tests {
     #[test]
     fn test_part1() {
         let input = "3,4,3,1,2";
-        let sample_input: Vec<u8> = input.split(',')
+        let sample_input: Vec<u8> = input
+            .split(',')
             .map(|number| number.parse::<u8>().unwrap())
             .collect::<Vec<u8>>();
         let sample_output = 5934;
@@ -98,7 +97,8 @@ mod tests {
     #[test]
     fn test_part2() {
         let input = "3,4,3,1,2";
-        let sample_input: Vec<u8> = input.split(',')
+        let sample_input: Vec<u8> = input
+            .split(',')
             .map(|number| number.parse::<u8>().unwrap())
             .collect::<Vec<u8>>();
         let sample_output = 26984457539;

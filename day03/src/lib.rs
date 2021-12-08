@@ -76,7 +76,7 @@ pub fn part1(input: &[String]) -> u32 {
             let bit = (input[i] >> bit_pos) & 1;
             ones_count += bit
         }
-        if ones_count > (input.len() as u32)/2 {
+        if ones_count > (input.len() as u32) / 2 {
             gamma_rate += 1 << bit_pos
         } else {
             epsilon_rate += 1 << bit_pos
@@ -128,14 +128,20 @@ pub fn part2(input: &[String]) -> u32 {
     while input_filtered_for_oxygen.len() != 1 {
         bit_pos -= 1;
 
-        let ones_count = input_filtered_for_oxygen.iter()
+        let ones_count = input_filtered_for_oxygen
+            .iter()
             .map(|input| (*input >> bit_pos) & 1)
             .filter(|bit| *bit == 1)
             .count();
 
-        let most_common_bit = if ones_count as f32 >= (input_filtered_for_oxygen.len() as f32)/2.0 { 1 } else { 0 };
+        let most_common_bit = if ones_count as f32 >= (input_filtered_for_oxygen.len() as f32) / 2.0
+        {
+            1
+        } else {
+            0
+        };
 
-        input_filtered_for_oxygen.retain(|input| ((input >> bit_pos) & 1) == most_common_bit );
+        input_filtered_for_oxygen.retain(|input| ((input >> bit_pos) & 1) == most_common_bit);
     }
     let oxygen_generator_rating = input_filtered_for_oxygen.first().unwrap();
 
@@ -144,14 +150,19 @@ pub fn part2(input: &[String]) -> u32 {
     while input_filtered_for_co2.len() != 1 {
         bit_pos -= 1;
 
-        let ones_count = input_filtered_for_co2.iter()
+        let ones_count = input_filtered_for_co2
+            .iter()
             .map(|input| (*input >> bit_pos) & 1)
             .filter(|bit| *bit == 1)
             .count();
 
-        let least_common_bit = if ones_count as f32 >= (input_filtered_for_co2.len() as f32)/2.0 { 0 } else { 1 };
+        let least_common_bit = if ones_count as f32 >= (input_filtered_for_co2.len() as f32) / 2.0 {
+            0
+        } else {
+            1
+        };
 
-        input_filtered_for_co2.retain(|input| ((input >> bit_pos) & 1) == least_common_bit );
+        input_filtered_for_co2.retain(|input| ((input >> bit_pos) & 1) == least_common_bit);
     }
     let co2_scrubber_rating = input_filtered_for_co2.first().unwrap();
 
@@ -162,16 +173,26 @@ pub fn part2(input: &[String]) -> u32 {
 mod tests {
     #[test]
     fn test_part1() {
-        let sample_input: Vec<String> = vec!["00100", "11110", "10110", "10111", "10101", "01111", "00111", "11100", "10000", "11001", "00010", "01010"]
-            .iter().map(|line| line.to_string()).collect();
+        let sample_input: Vec<String> = vec![
+            "00100", "11110", "10110", "10111", "10101", "01111", "00111", "11100", "10000",
+            "11001", "00010", "01010",
+        ]
+        .iter()
+        .map(|line| line.to_string())
+        .collect();
         let sample_output = 198;
         assert_eq!(crate::part1(&sample_input), sample_output);
     }
 
     #[test]
     fn test_part2() {
-        let sample_input: Vec<String> = vec!["00100", "11110", "10110", "10111", "10101", "01111", "00111", "11100", "10000", "11001", "00010", "01010"]
-            .iter().map(|line| line.to_string()).collect();
+        let sample_input: Vec<String> = vec![
+            "00100", "11110", "10110", "10111", "10101", "01111", "00111", "11100", "10000",
+            "11001", "00010", "01010",
+        ]
+        .iter()
+        .map(|line| line.to_string())
+        .collect();
         let sample_output = 230;
         assert_eq!(crate::part2(&sample_input), sample_output);
     }
