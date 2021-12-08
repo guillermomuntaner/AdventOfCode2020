@@ -24,7 +24,8 @@ fn main() {
     println!("Day 6 - Part 2: {}", day06::part2(&day6_input));
 
     let day7_input = inpututils::read_comma_separated_as::<u64>("inputs/day07");
-    println!("Day 7 - Part 1: {}", day07::part1(&day7_input));
+    let mut day7_pt1_input = day7_input.to_vec();
+    println!("Day 7 - Part 1: {}", day07::part1(&mut day7_pt1_input));
     println!("Day 7 - Part 2: {}", day07::part2(&day7_input));
 }
 
@@ -71,5 +72,13 @@ mod tests {
         let input = inpututils::read_comma_separated_as::<u8>("inputs/day06");
         assert_eq!(day06::part1(&input), 386640);
         assert_eq!(day06::part2(&input), 1733403626279);
+    }
+
+    #[test]
+    fn test_day_07() {
+        let input = inpututils::read_comma_separated_as::<u64>("inputs/day07");
+        let mut pt1_input = input.to_vec();
+        assert_eq!(day07::part1(&mut pt1_input), 352997);
+        assert_eq!(day07::part2(&input), 101571302);
     }
 }
