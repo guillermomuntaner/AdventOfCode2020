@@ -101,8 +101,9 @@ fn day7_benchmark(c: &mut Criterion) {
     c.bench_function("Day 7 - Read input", |b| b.iter(|| {
         inpututils::read_comma_separated_as::<u64>("inputs/day07");
     }));
+    let mut pt1_input = inpututils::read_comma_separated_as::<u64>("inputs/day07");
     c.bench_function("Day 7 - Part 1", |b| b.iter(|| {
-        day07::part1(&input);
+        day07::part1(&mut pt1_input);
     }));
     c.bench_function("Day 7 - Part 2", |b| b.iter(|| {
         day07::part2(&input);
