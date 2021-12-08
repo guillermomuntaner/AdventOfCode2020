@@ -85,4 +85,11 @@ mod tests {
         assert_eq!(day07::part1(&mut pt1_input), 352997);
         assert_eq!(day07::part2(&input), 101571302);
     }
+
+    #[test]
+    fn test_day_08() {
+        let input = inpututils::read_lines("inputs/day08");
+        assert_eq!(day08::part1(&input), 274);
+        assert_eq!(day08::part2(&input), 1012089);
+    }
 }

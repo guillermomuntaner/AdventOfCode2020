@@ -160,6 +160,25 @@ fn day7_benchmark(c: &mut Criterion) {
     });
 }
 
+fn day8_benchmark(c: &mut Criterion) {
+    let input = inpututils::read_lines("inputs/day08");
+    c.bench_function("Day 8 - Read input", |b| {
+        b.iter(|| {
+            inpututils::read_lines("inputs/day08");
+        })
+    });
+    c.bench_function("Day 8 - Part 1", |b| {
+        b.iter(|| {
+            day08::part1(&input);
+        })
+    });
+    c.bench_function("Day 8 - Part 2", |b| {
+        b.iter(|| {
+            day08::part2(&input);
+        })
+    });
+}
+
 criterion_group!(
     benchmark,
     day1_benchmark,
@@ -168,6 +187,7 @@ criterion_group!(
     day4_benchmark,
     day5_benchmark,
     day6_benchmark,
-    day7_benchmark
+    day7_benchmark,
+    day8_benchmark
 );
 criterion_main!(benchmark);
