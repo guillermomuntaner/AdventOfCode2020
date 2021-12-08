@@ -27,6 +27,10 @@ fn main() {
     let mut day7_pt1_input = day7_input.to_vec();
     println!("Day 7 - Part 1: {}", day07::part1(&mut day7_pt1_input));
     println!("Day 7 - Part 2: {}", day07::part2(&day7_input));
+
+    let day8_input = inpututils::read_lines("inputs/day08");
+    println!("Day 8 - Part 1: {}", day08::part1(&day8_input));
+    println!("Day 8 - Part 2: {}", day08::part2(&day8_input));
 }
 
 #[cfg(test)]
