@@ -101,6 +101,6 @@ mod tests {
     fn test_day_09() {
         let input = inpututils::read_lines("inputs/day09");
         assert_eq!(day09::part1(&input), 465);
-        assert_eq!(day09::part2(&input), 0);
+        assert_eq!(day09::part2(&input), 1269555);
     }
 }
