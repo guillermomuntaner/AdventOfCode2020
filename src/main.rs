@@ -31,6 +31,10 @@ fn main() {
     let day8_input = inpututils::read_lines("inputs/day08");
     println!("Day 8 - Part 1: {}", day08::part1(&day8_input));
     println!("Day 8 - Part 2: {}", day08::part2(&day8_input));
+
+    let day9_input = inpututils::read_lines("inputs/day09");
+    println!("Day 9 - Part 1: {}", day09::part1(&day9_input));
+    println!("Day 9 - Part 2: {}", day09::part2(&day9_input));
 }
 
 #[cfg(test)]
@@ -91,5 +95,12 @@ mod tests {
         let input = inpututils::read_lines("inputs/day08");
         assert_eq!(day08::part1(&input), 274);
         assert_eq!(day08::part2(&input), 1012089);
+    }
+
+    #[test]
+    fn test_day_09() {
+        let input = inpututils::read_lines("inputs/day09");
+        assert_eq!(day09::part1(&input), 465);
+        assert_eq!(day09::part2(&input), 0);
     }
 }
