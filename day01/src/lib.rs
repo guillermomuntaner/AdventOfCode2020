@@ -40,7 +40,12 @@
 /// In this example, there are 7 measurements that are larger than the previous measurement.
 ///
 /// How many measurements are larger than the previous measurement?
-pub fn part1(depth: &[u32]) -> u32 {
+pub fn part1(input: &str) -> usize {
+    let depth = input
+        .lines()
+        .map(|n| n.parse::<u16>().unwrap())
+        .collect::<Vec<_>>();
+
     let mut count = 0;
     for i in 1..depth.len() {
         if depth[i] > depth[i - 1] {
@@ -50,22 +55,16 @@ pub fn part1(depth: &[u32]) -> u32 {
     return count;
 }
 
-pub fn part1_iter<'a>(instructions: impl Iterator<Item = &'a str>) -> i32 {
-    let mut prev: Option<&str> = None;
-    let mut count = 0;
-    for instruction in instructions {
-        match prev {
-            Some(prev) => {
-                if instruction > prev {
-                    count += 1
-                }
-            }
-            None => {}
-        }
-        prev = Some(instruction)
-    }
-    return count;
+pub fn part1_functional(input: &str) -> usize {
+    input
+        .lines()
+        .map(|n| n.parse::<u16>().unwrap())
+        .collect::<Vec<u16>>()
+        .windows(2)
+        .filter(|&vec| vec[0] < vec[1])
+        .count()
 }
+
 
 /// --- Part Two ---
 /// Considering every single measurement isn't as useful as you expected: there's just too much noise in the data.
@@ -99,7 +98,12 @@ pub fn part1_iter<'a>(instructions: impl Iterator<Item = &'a str>) -> i32 {
 /// In this example, there are 5 sums that are larger than the previous sum.
 ///
 /// Consider sums of a three-measurement sliding window. How many sums are larger than the previous sum?
-pub fn part2(depth: &[u32]) -> u32 {
+pub fn part2(input: &str) -> u32 {
+    let depth = input
+        .lines()
+        .map(|n| n.parse::<u32>().unwrap())
+        .collect::<Vec<u32>>();
+
     let mut count = 0;
     for i in 3..depth.len() {
         let window1 = depth[i - 1] + depth[i - 2] + depth[i - 3];
@@ -111,36 +115,42 @@ pub fn part2(depth: &[u32]) -> u32 {
     return count;
 }
 
-pub fn part2_functional(depth: &[u32]) -> usize {
-    return depth
+pub fn part2_functional(input: &str) -> usize {
+    input
+        .lines()
+        .map(|n| n.parse::<u32>().unwrap())
+        .collect::<Vec<u32>>()
         .windows(3)
         .map(|window| window.iter().sum())
         .collect::<Vec<u32>>()
         .windows(2)
         .filter(|pair| pair[1] > pair[0])
-        .count();
+        .count()
 }
 
 #[cfg(test)]
 mod tests {
     #[test]
     fn test_part1() {
-        let sample_input = [199, 200, 208, 210, 200, 207, 240, 269, 260, 263];
-        let sample_output = 7;
-        assert_eq!(crate::part1(&sample_input), sample_output);
+        let input = "199\n200\n208\n210\n200\n207\n240\n269\n260\n263";
+        assert_eq!(crate::part1(input), 7);
+    }
+
+    #[test]
+    fn test_part1_functional() {
+        let input = "199\n200\n208\n210\n200\n207\n240\n269\n260\n263";
+        assert_eq!(crate::part1_functional(input), 7);
     }
 
     #[test]
     fn test_part2() {
-        let sample_input = [199, 200, 208, 210, 200, 207, 240, 269, 260, 263];
-        let sample_output = 5;
-        assert_eq!(crate::part2(&sample_input), sample_output);
+        let input = "199\n200\n208\n210\n200\n207\n240\n269\n260\n263";
+        assert_eq!(crate::part2(input), 5);
     }
 
     #[test]
     fn test_part2_functional() {
-        let sample_input = [199, 200, 208, 210, 200, 207, 240, 269, 260, 263];
-        let sample_output = 5;
-        assert_eq!(crate::part2_functional(&sample_input), sample_output);
+        let input = "199\n200\n208\n210\n200\n207\n240\n269\n260\n263";
+        assert_eq!(crate::part2_functional(input), 5);
     }
 }

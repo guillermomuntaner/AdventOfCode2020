@@ -67,9 +67,9 @@ use std::collections::HashSet;
 /// Because the digits 1, 4, 7, and 8 each use a unique number of segments, you should be able to tell which combinations of signals correspond to those digits. Counting only digits in the output values (the part after | on each line), in the above example, there are 26 instances of digits that use a unique number of segments (highlighted above).
 ///
 /// In the output values, how many times do digits 1, 4, 7, or 8 appear?
-pub fn part1(instructions: &[String]) -> usize {
-    instructions
-        .iter()
+pub fn part1(input: &str) -> usize {
+    input
+        .lines()
         .map(|instructions| {
             let parts = instructions.split(" | ").collect::<Vec<&str>>();
             let inputs = parse_digits_signals(parts[0]);
@@ -149,9 +149,9 @@ fn parse_digits_signals(string: &str) -> Vec<HashSet<char>> {
 /// Adding all of the output values in this larger example produces 61229.
 ///
 /// For each entry, determine all of the wire/segment connections and decode the four-digit output values. What do you get if you add up all of the output values?
-pub fn part2(instructions: &[String]) -> usize {
-    instructions
-        .iter()
+pub fn part2(input: &str) -> usize {
+    input
+        .lines()
         .map(|instructions| {
             let parts = instructions.split(" | ").collect::<Vec<&str>>();
             let mut inputs = parse_digits_signals(parts[0]);
@@ -257,9 +257,7 @@ dbcfg fgd bdegcaf fgec aegbdf ecdfab fbedc dacgb gdcebf gf | cefg dcbef fcge gbc
 bdfegc cbegaf gecbf dfcage bdacg ed bedf ced adcbefg gebcd | ed bcgafe cdgba cbgef
 egadfb cdbfeg cegd fecab cgb gbdefca cg fgcdab egfdb bfceg | gbdfcae bgc cg cgb
 gcafb gcf dcaebfg ecagb gf abcdeg gaef cafbge fdbac fegbdc | fgae cfgab fg bagce";
-        let sample_input: Vec<String> = input.lines().map(|line| line.to_string()).collect();
-        let sample_output = 26;
-        assert_eq!(crate::part1(&sample_input), sample_output);
+        assert_eq!(crate::part1(input), 26);
     }
 
     #[test]
@@ -275,8 +273,6 @@ dbcfg fgd bdegcaf fgec aegbdf ecdfab fbedc dacgb gdcebf gf | cefg dcbef fcge gbc
 bdfegc cbegaf gecbf dfcage bdacg ed bedf ced adcbefg gebcd | ed bcgafe cdgba cbgef
 egadfb cdbfeg cegd fecab cgb gbdefca cg fgcdab egfdb bfceg | gbdfcae bgc cg cgb
 gcafb gcf dcaebfg ecagb gf abcdeg gaef cafbge fdbac fegbdc | fgae cfgab fg bagce";
-        let sample_input: Vec<String> = input.lines().map(|line| line.to_string()).collect();
-        let sample_output = 61229;
-        assert_eq!(crate::part2(&sample_input), sample_output);
+        assert_eq!(crate::part2(input), 61229);
     }
 }

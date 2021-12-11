@@ -27,8 +27,8 @@
 /// After following these instructions, you would have a horizontal position of 15 and a depth of 10. (Multiplying these together produces 150.)
 ///
 /// Calculate the horizontal position and depth you would have after following the planned course. What do you get if you multiply your final horizontal position by your final depth?
-pub fn part1(instructions: &[String]) -> i32 {
-    let final_position = instructions.iter().fold((0, 0), |position, instruction| {
+pub fn part1(input: &str) -> i32 {
+    let final_position = input.lines().fold((0, 0), |position, instruction| {
         let parts = instruction.split(" ").collect::<Vec<&str>>();
         let direction = parts[0];
         let quantity = parts[1].parse::<i32>().unwrap();
@@ -43,32 +43,14 @@ pub fn part1(instructions: &[String]) -> i32 {
     return final_position.0 * final_position.1;
 }
 
-pub fn part1_iter<'a>(instructions: impl Iterator<Item = &'a str>) -> i32 {
-    let final_position = instructions
-        .into_iter()
-        .fold((0, 0), |position, instruction| {
-            let parts = instruction.split(" ").collect::<Vec<&str>>();
-            let direction = parts[0];
-            let quantity = parts[1].parse::<i32>().unwrap();
-            return match direction {
-                "forward" => (position.0 + quantity, position.1),
-                "down" => (position.0, position.1 + quantity),
-                "up" => (position.0, position.1 - quantity),
-                _ => panic!("Unexpected direction"),
-            };
-        });
-
-    return final_position.0 * final_position.1;
-}
-
 use lazy_static::lazy_static;
 use regex::{Captures, Regex};
 
-pub fn part1_with_regex(instructions: &[String]) -> i32 {
+pub fn part1_with_regex(input: &str) -> i32 {
     lazy_static! {
         static ref REGEX: Regex = Regex::new(r"(forward|down|up) (\d+)").unwrap();
     }
-    let final_position = instructions.iter().fold((0, 0), |position, instruction| {
+    let final_position = input.lines().fold((0, 0), |position, instruction| {
         let cap: Captures = REGEX
             .captures(instruction)
             .unwrap_or_else(|| panic!("Unexpected line: {}", instruction));
@@ -107,9 +89,9 @@ pub fn part1_with_regex(instructions: &[String]) -> i32 {
 /// After following these new instructions, you would have a horizontal position of 15 and a depth of 60. (Multiplying these produces 900.)
 ///
 /// Using this new interpretation of the commands, calculate the horizontal position and depth you would have after following the planned course. What do you get if you multiply your final horizontal position by your final depth?
-pub fn part2(instructions: &[String]) -> i32 {
-    let final_position = instructions
-        .iter()
+pub fn part2(input: &str) -> i32 {
+    let final_position = input
+        .lines()
         .fold((0, 0, 0), |position, instruction| {
             let parts = instruction.split(" ").collect::<Vec<&str>>();
             let direction = parts[0];
@@ -133,35 +115,34 @@ pub fn part2(instructions: &[String]) -> i32 {
 mod tests {
     #[test]
     fn test_part1() {
-        let sample_input: Vec<String> = vec![
-            "forward 5",
-            "down 5",
-            "forward 8",
-            "up 3",
-            "down 8",
-            "forward 2",
-        ]
-        .iter()
-        .map(|line| line.to_string())
-        .collect();
-        let sample_output = 150;
-        assert_eq!(crate::part1(&sample_input), sample_output);
+        let input = "forward 5
+down 5
+forward 8
+up 3
+down 8
+forward 2";
+        assert_eq!(crate::part1(input), 150);
+    }
+
+    #[test]
+    fn test_part1_with_regex() {
+        let input = "forward 5
+down 5
+forward 8
+up 3
+down 8
+forward 2";
+        assert_eq!(crate::part1_with_regex(input), 150);
     }
 
     #[test]
     fn test_part2() {
-        let sample_input: Vec<String> = vec![
-            "forward 5",
-            "down 5",
-            "forward 8",
-            "up 3",
-            "down 8",
-            "forward 2",
-        ]
-        .iter()
-        .map(|line| line.to_string())
-        .collect();
-        let sample_output = 900;
-        assert_eq!(crate::part2(&sample_input), sample_output);
+        let input = "forward 5
+down 5
+forward 8
+up 3
+down 8
+forward 2";
+        assert_eq!(crate::part2(input), 900);
     }
 }

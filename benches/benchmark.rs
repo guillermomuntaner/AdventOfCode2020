@@ -1,65 +1,42 @@
 use criterion::{criterion_group, criterion_main, Criterion};
 
 fn day1_benchmark(c: &mut Criterion) {
-    let input = inpututils::read_lines_as::<u32>("inputs/day01");
-    c.bench_function("Day 1 - Read input", |b| {
-        b.iter(|| {
-            inpututils::read_lines_as::<u32>("inputs/day01");
-        })
-    });
     c.bench_function("Day 1 - Part 1", |b| {
         b.iter(|| {
-            let input = inpututils::read_lines_as::<u32>("inputs/day01");
-            day01::part1(&input);
+            day01::part1(include_str!("../inputs/day01"));
         })
     });
-    c.bench_function("Day 1 - Part 1", |b| {
+    c.bench_function("Day 1 - Part 1 - Functional", |b| {
         b.iter(|| {
-            let string = std::fs::read_to_string("inputs/day02").unwrap();
-            day01::part1_iter(string.lines());
+            day01::part1_functional(include_str!("../inputs/day01"));
         })
     });
     c.bench_function("Day 1 - Part 2", |b| {
         b.iter(|| {
-            day01::part2(&input);
+            day01::part2(include_str!("../inputs/day01"));
         })
     });
     c.bench_function("Day 1 - Part 2 - Functional", |b| {
         b.iter(|| {
-            day01::part2_functional(&input);
+            day01::part2_functional(include_str!("../inputs/day01"));
         })
     });
 }
 
 fn day2_benchmark(c: &mut Criterion) {
-    let input = inpututils::read_lines("inputs/day02");
-    c.bench_function("Day 2 - Read input", |b| {
-        b.iter(|| {
-            inpututils::read_lines("inputs/day02");
-        })
-    });
     c.bench_function("Day 2 - Part 1", |b| {
         b.iter(|| {
-            let input = inpututils::read_lines("inputs/day02");
-            day02::part1(&input);
+            day02::part1(include_str!("../inputs/day02"));
         })
     });
     c.bench_function("Day 2 - Part 1 with regex", |b| {
         b.iter(|| {
-            let input = inpututils::read_lines("inputs/day02");
-            day02::part1_with_regex(&input);
-        })
-    });
-    c.bench_function("Day 2 - Part 2 - Iter", |b| {
-        b.iter(|| {
-            let file = inpututils::read_file("inputs/day02");
-            let lines_iter = inpututils::lines(&file);
-            day02::part1_iter(lines_iter);
+            day02::part1_with_regex(include_str!("../inputs/day02"));
         })
     });
     c.bench_function("Day 2 - Part 2", |b| {
         b.iter(|| {
-            day02::part2(&input);
+            day02::part2(include_str!("../inputs/day02"));
         })
     });
 }
@@ -161,74 +138,56 @@ fn day7_benchmark(c: &mut Criterion) {
 }
 
 fn day8_benchmark(c: &mut Criterion) {
-    let input = inpututils::read_lines("inputs/day08");
-    c.bench_function("Day 8 - Read input", |b| {
-        b.iter(|| {
-            inpututils::read_lines("inputs/day08");
-        })
-    });
     c.bench_function("Day 8 - Part 1", |b| {
         b.iter(|| {
-            day08::part1(&input);
+            day08::part1(include_str!("../inputs/day08"));
         })
     });
     c.bench_function("Day 8 - Part 2", |b| {
         b.iter(|| {
-            day08::part2(&input);
+            day08::part2(include_str!("../inputs/day08"));
         })
     });
 }
 
 fn day9_benchmark(c: &mut Criterion) {
-    let input = inpututils::read_lines("inputs/day09");
-    c.bench_function("Day 9 - Read input", |b| {
-        b.iter(|| {
-            inpututils::read_lines("inputs/day09");
-        })
-    });
     c.bench_function("Day 9 - Part 1", |b| {
         b.iter(|| {
-            day09::part1(&input);
+            day09::part1(include_str!("../inputs/day09"));
         })
     });
     c.bench_function("Day 9 - Part 2", |b| {
         b.iter(|| {
-            day09::part2(&input);
+            day09::part2(include_str!("../inputs/day09"));
         })
     });
 }
 
 fn day10_benchmark(c: &mut Criterion) {
-    let input = inpututils::read_lines("inputs/day10");
-    c.bench_function("Day 10 - Read input", |b| {
-        b.iter(|| {
-            inpututils::read_lines("inputs/day09");
-        })
-    });
     c.bench_function("Day 10 - Part 1", |b| {
         b.iter(|| {
-            day10::part1(&input);
+            day10::part1(include_str!("../inputs/day10"));
         })
     });
     c.bench_function("Day 10 - Part 2", |b| {
         b.iter(|| {
-            day10::part2(&input);
+            day10::part2(include_str!("../inputs/day10"));
         })
     });
 }
 
 criterion_group!(
     benchmark,
-    day1_benchmark,
+    //day1_benchmark,
     day2_benchmark,
-    day3_benchmark,
-    day4_benchmark,
-    day5_benchmark,
-    day6_benchmark,
-    day7_benchmark,
-    day8_benchmark,
-    day8_benchmark,
-    day9_benchmark,
-    day10_benchmark,
+    //day3_benchmark,
+    //day4_benchmark,
+    //day5_benchmark,
+    //day6_benchmark,
+    //day7_benchmark,
+    //day8_benchmark,
+    //day8_benchmark,
+    //day9_benchmark,
+    //day10_benchmark,
 );
 criterion_main!(benchmark);

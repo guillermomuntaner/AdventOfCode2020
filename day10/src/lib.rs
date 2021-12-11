@@ -1,4 +1,6 @@
-pub fn part1(instructions: &[String]) -> usize {
+use std::str::Lines;
+
+pub fn part1(str: &str) -> usize {
     let mut score = 0;
 
     fn seek<I>(close_char: Option<char>, chars: &mut I) -> Option<usize>
@@ -58,15 +60,15 @@ pub fn part1(instructions: &[String]) -> usize {
         }
     }
 
-    for instruction in instructions {
-        let mut iter = instruction.chars();
+    for line in str.lines() {
+        let mut iter = line.chars();
         score += seek(None, &mut iter).unwrap_or(0);
     }
 
     score
 }
 
-pub fn part2(instructions: &[String]) -> usize {
+pub fn part2(str: &str) -> usize {
     fn seek<I>(close_char: Option<char>, chars: &mut I) -> Option<usize>
     where
         I: Iterator<Item = char>,
@@ -133,7 +135,7 @@ pub fn part2(instructions: &[String]) -> usize {
     }
 
     let mut scores: Vec<usize> = Vec::new();
-    for instruction in instructions {
+    for instruction in str.lines() {
         let mut iter = instruction.chars();
         match seek(None, &mut iter) {
             Some(score) => scores.push(score),
@@ -159,9 +161,7 @@ mod tests {
 [<(<(<(<{}))><([]([]()
 <{([([[(<>()){}]>(<<{{
 <{([{{}}[<[[[<>{}]]]>[]]";
-        let sample_input: Vec<String> = input.lines().map(|line| line.to_string()).collect();
-        let sample_output = 26397;
-        assert_eq!(crate::part1(&sample_input), sample_output);
+        assert_eq!(crate::part1(input), 26397);
     }
 
     #[test]
@@ -176,8 +176,6 @@ mod tests {
 [<(<(<(<{}))><([]([]()
 <{([([[(<>()){}]>(<<{{
 <{([{{}}[<[[[<>{}]]]>[]]";
-        let sample_input: Vec<String> = input.lines().map(|line| line.to_string()).collect();
-        let sample_output = 288957;
-        assert_eq!(crate::part2(&sample_input), sample_output);
+        assert_eq!(crate::part2(input), 288957);
     }
 }

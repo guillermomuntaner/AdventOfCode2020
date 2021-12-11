@@ -1,9 +1,9 @@
 use array2d::Array2D;
 use std::collections::HashSet;
 
-pub fn part1(instructions: &[String]) -> u32 {
-    let lines = instructions
-        .iter()
+pub fn part1(input: &str) -> u32 {
+    let lines = input
+        .lines()
         .map(|instruction| {
             instruction
                 .chars()
@@ -42,9 +42,9 @@ pub fn part1(instructions: &[String]) -> u32 {
     return sum;
 }
 
-pub fn part2(instructions: &[String]) -> usize {
-    let lines = instructions
-        .iter()
+pub fn part2(input: &str) -> usize {
+    let lines = input
+        .lines()
         .map(|instruction| {
             instruction
                 .chars()
@@ -120,9 +120,7 @@ mod tests {
 9856789892
 8767896789
 9899965678";
-        let sample_input: Vec<String> = input.lines().map(|line| line.to_string()).collect();
-        let sample_output = 15;
-        assert_eq!(crate::part1(&sample_input), sample_output);
+        assert_eq!(crate::part1(input), 15);
     }
 
     #[test]
@@ -132,8 +130,6 @@ mod tests {
 9856789892
 8767896789
 9899965678";
-        let sample_input: Vec<String> = input.lines().map(|line| line.to_string()).collect();
-        let sample_output = 1134;
-        assert_eq!(crate::part2(&sample_input), sample_output);
+        assert_eq!(crate::part2(input), 1134);
     }
 }
