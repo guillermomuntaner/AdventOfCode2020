@@ -1,9 +1,21 @@
 fn main() {
-    println!("Day 1 - Part 1: {}", day01::part1(include_str!("../inputs/day01")));
-    println!("Day 1 - Part 2: {}", day01::part2(include_str!("../inputs/day01")));
+    println!(
+        "Day 1 - Part 1: {}",
+        day01::part1(include_str!("../inputs/day01"))
+    );
+    println!(
+        "Day 1 - Part 2: {}",
+        day01::part2(include_str!("../inputs/day01"))
+    );
 
-    println!("Day 2 - Part 1: {}", day02::part1(include_str!("../inputs/day02")));
-    println!("Day 2 - Part 2: {}", day02::part2(include_str!("../inputs/day02")));
+    println!(
+        "Day 2 - Part 1: {}",
+        day02::part1(include_str!("../inputs/day02"))
+    );
+    println!(
+        "Day 2 - Part 2: {}",
+        day02::part2(include_str!("../inputs/day02"))
+    );
 
     let day3_input = inpututils::read_lines("inputs/day03");
     println!("Day 3 - Part 1: {}", day03::part1(&day3_input));
@@ -26,14 +38,41 @@ fn main() {
     println!("Day 7 - Part 1: {}", day07::part1(&mut day7_pt1_input));
     println!("Day 7 - Part 2: {}", day07::part2(&day7_input));
 
-    println!("Day 8 - Part 1: {}", day08::part1(include_str!("../inputs/day08")));
-    println!("Day 8 - Part 2: {}", day08::part2(include_str!("../inputs/day08")));
+    println!(
+        "Day 8 - Part 1: {}",
+        day08::part1(include_str!("../inputs/day08"))
+    );
+    println!(
+        "Day 8 - Part 2: {}",
+        day08::part2(include_str!("../inputs/day08"))
+    );
 
-    println!("Day 9 - Part 1: {}", day09::part1(include_str!("../inputs/day09")));
-    println!("Day 9 - Part 2: {}", day09::part2(include_str!("../inputs/day09")));
+    println!(
+        "Day 9 - Part 1: {}",
+        day09::part1(include_str!("../inputs/day09"))
+    );
+    println!(
+        "Day 9 - Part 2: {}",
+        day09::part2(include_str!("../inputs/day09"))
+    );
 
-    println!("Day 10 - Part 1: {}", day10::part1(include_str!("../inputs/day10")));
-    println!("Day 10 - Part 2: {}", day10::part2(include_str!("../inputs/day10")));
+    println!(
+        "Day 10 - Part 1: {}",
+        day10::part1(include_str!("../inputs/day10"))
+    );
+    println!(
+        "Day 10 - Part 2: {}",
+        day10::part2(include_str!("../inputs/day10"))
+    );
+
+    println!(
+        "Day 11 - Part 1: {}",
+        day11::part1(include_str!("../inputs/day11"))
+    );
+    println!(
+        "Day 11 - Part 2: {}",
+        day11::part2(include_str!("../inputs/day11"))
+    );
 }
 
 #[cfg(test)]
@@ -103,5 +142,11 @@ mod tests {
     fn test_day_10() {
         assert_eq!(day10::part1(include_str!("../inputs/day10")), 168417);
         assert_eq!(day10::part2(include_str!("../inputs/day10")), 2802519786);
+    }
+
+    #[test]
+    fn test_day_11() {
+        assert_eq!(day11::part1(include_str!("../inputs/day11")), 1594);
+        assert_eq!(day11::part2(include_str!("../inputs/day11")), 437);
     }
 }

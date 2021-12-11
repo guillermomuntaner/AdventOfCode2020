@@ -65,7 +65,6 @@ pub fn part1_functional(input: &str) -> usize {
         .count()
 }
 
-
 /// --- Part Two ---
 /// Considering every single measurement isn't as useful as you expected: there's just too much noise in the data.
 ///

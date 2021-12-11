@@ -1,5 +1,3 @@
-use std::str::Lines;
-
 pub fn part1(str: &str) -> usize {
     let mut score = 0;
 

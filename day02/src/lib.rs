@@ -90,23 +90,21 @@ pub fn part1_with_regex(input: &str) -> i32 {
 ///
 /// Using this new interpretation of the commands, calculate the horizontal position and depth you would have after following the planned course. What do you get if you multiply your final horizontal position by your final depth?
 pub fn part2(input: &str) -> i32 {
-    let final_position = input
-        .lines()
-        .fold((0, 0, 0), |position, instruction| {
-            let parts = instruction.split(" ").collect::<Vec<&str>>();
-            let direction = parts[0];
-            let quantity = parts[1].parse::<i32>().unwrap();
-            return match direction {
-                "forward" => (
-                    position.0 + quantity,
-                    position.1 + position.2 * quantity,
-                    position.2,
-                ),
-                "down" => (position.0, position.1, position.2 + quantity),
-                "up" => (position.0, position.1, position.2 - quantity),
-                _ => panic!("Unexpected direction"),
-            };
-        });
+    let final_position = input.lines().fold((0, 0, 0), |position, instruction| {
+        let parts = instruction.split(" ").collect::<Vec<&str>>();
+        let direction = parts[0];
+        let quantity = parts[1].parse::<i32>().unwrap();
+        return match direction {
+            "forward" => (
+                position.0 + quantity,
+                position.1 + position.2 * quantity,
+                position.2,
+            ),
+            "down" => (position.0, position.1, position.2 + quantity),
+            "up" => (position.0, position.1, position.2 - quantity),
+            _ => panic!("Unexpected direction"),
+        };
+    });
 
     return final_position.0 * final_position.1;
 }

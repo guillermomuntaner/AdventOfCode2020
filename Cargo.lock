@@ -17,6 +17,7 @@ dependencies = [
  "day08",
  "day09",
  "day10",
+ "day11",
  "inpututils",
 ]
 
@@ -253,6 +254,13 @@ dependencies = [
 [[package]]
 name = "day10"
 version = "0.1.0"
+
+[[package]]
+name = "day11"
+version = "0.1.0"
+dependencies = [
+ "array2d",
+]
 
 [[package]]
 name = "either"
