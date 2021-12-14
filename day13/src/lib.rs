@@ -1,8 +1,7 @@
-use std::collections::HashSet;
 use array2d::Array2D;
+use std::collections::HashSet;
 
 pub fn part1(input: &str) -> usize {
-
     let (coordinates_str, instructions_str) = input.split_once("\n\n").unwrap();
 
     let instructions = instructions_str
@@ -12,7 +11,8 @@ pub fn part1(input: &str) -> usize {
         .map(|(command, position_str)| (command, position_str.parse::<usize>().unwrap()))
         .collect::<Vec<_>>();
 
-    let coordinates = coordinates_str.lines()
+    let coordinates = coordinates_str
+        .lines()
         .map(|coordinate| coordinate.split_once(',').unwrap())
         .map(|(x, y)| (y.parse::<usize>().unwrap(), x.parse::<usize>().unwrap()));
 
@@ -22,19 +22,19 @@ pub fn part1(input: &str) -> usize {
             match command {
                 "fold along x" => {
                     if x == position || x > 2 * position {
-                        continue
+                        continue;
                     } else if x > position {
                         x = 2 * position - x
                     }
-                },
+                }
                 "fold along y" => {
                     if y == position || y > 2 * position {
-                        continue
+                        continue;
                     } else if y > position {
                         y = 2 * position - y
                     }
-                },
-                _ => panic!("Unexpected instruction {}", command)
+                }
+                _ => panic!("Unexpected instruction {}", command),
             }
         }
         folded_coordinates.insert((y, x));
@@ -44,7 +44,6 @@ pub fn part1(input: &str) -> usize {
 }
 
 pub fn part2(input: &str) -> String {
-
     let (coordinates_str, instructions_str) = input.split_once("\n\n").unwrap();
 
     let instructions = instructions_str
@@ -53,7 +52,8 @@ pub fn part2(input: &str) -> String {
         .map(|(command, position_str)| (command, position_str.parse::<usize>().unwrap()))
         .collect::<Vec<_>>();
 
-    let coordinates = coordinates_str.lines()
+    let coordinates = coordinates_str
+        .lines()
         .map(|coordinate| coordinate.split_once(',').unwrap())
         .map(|(x, y)| (y.parse::<usize>().unwrap(), x.parse::<usize>().unwrap()));
 
@@ -66,28 +66,30 @@ pub fn part2(input: &str) -> String {
             match command {
                 "fold along x" => {
                     if x == position || x > 2 * position {
-                        continue
+                        continue;
                     } else if x > position {
                         x = 2 * position - x
                     }
                     width = position
-                },
+                }
                 "fold along y" => {
                     if y == position || y > 2 * position {
-                        continue
+                        continue;
                     } else if y > position {
                         y = 2 * position - y
                     }
                     height = position
-                },
-                _ => panic!("Unexpected instruction {}", command)
+                }
+                _ => panic!("Unexpected instruction {}", command),
             }
         }
         folded_coordinates.push((y, x))
     }
 
     let mut map = Array2D::<char>::filled_with('.', height, width);
-    folded_coordinates.iter().for_each(|&folded_coordinate| map[folded_coordinate] = '#');
+    folded_coordinates
+        .iter()
+        .for_each(|&folded_coordinate| map[folded_coordinate] = '#');
 
     map.rows_iter()
         .map(|row| row.collect::<String>())
