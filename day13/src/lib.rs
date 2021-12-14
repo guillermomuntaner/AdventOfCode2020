@@ -1,111 +1,96 @@
+use std::collections::HashSet;
 use array2d::Array2D;
 
 pub fn part1(input: &str) -> usize {
-    let mut map = Array2D::<bool>::filled_with(false, 3000, 3000);
 
-    let (coordinates, instructions) = input.split_once("\n\n").unwrap();
+    let (coordinates_str, instructions_str) = input.split_once("\n\n").unwrap();
 
-    coordinates.lines()
-        .map(|coordinate| coordinate.split(',').map(|c| c.parse::<usize>().unwrap()).collect::<Vec<_>>() )
-        .map(|coordinate| (coordinate[1], coordinate[0]))
-        .for_each(|coordinate| map[coordinate] = true);
-
-    let final_map = instructions
+    let instructions = instructions_str
         .lines()
         .take(1)
-        .fold(map, |map, instruction| {
-            let (command, position_str) = instruction.split_once('=').unwrap();
-            let position = position_str.parse::<usize>().unwrap();
-            match command {
-                "fold along y" => {
-                    let mut new_map = Array2D::<bool>::filled_with(false, position, map.num_columns());
-                    for x in 0..new_map.num_columns() {
-                        for y in 0..new_map.num_rows() {
-                            if y < position {
-                                if y <= 2*position && map[(2 * position - y, x)] {
-                                    new_map[(y, x)] = true
-                                } else {
-                                    new_map[(y,x)] = map[(y,x)]
-                                }
-                            }
-                        }
-                    }
-                    new_map
-                }
-                "fold along x" => {
-                    let mut new_map = Array2D::<bool>::filled_with(false, map.num_rows(), position);
-                    for x in 0..map.num_columns() {
-                        for y in 0..map.num_rows() {
-                            if x < position {
-                                if x <= 2*position && map[(y, 2 * position - x)] {
-                                    new_map[(y, x)] = true
-                                } else {
-                                    new_map[(y,x)] = map[(y,x)]
-                                }
-                            }
-                        }
-                    }
-                    new_map
-                }
-                c => { panic!("Expected fold along x/y, got {}", c) }
-            }
-        });
+        .map(|line| line.split_once('=').unwrap())
+        .map(|(command, position_str)| (command, position_str.parse::<usize>().unwrap()))
+        .collect::<Vec<_>>();
 
-    final_map.elements_column_major_iter().filter(|&e| *e).count()
+    let coordinates = coordinates_str.lines()
+        .map(|coordinate| coordinate.split_once(',').unwrap())
+        .map(|(x, y)| (y.parse::<usize>().unwrap(), x.parse::<usize>().unwrap()));
+
+    let mut folded_coordinates: HashSet<(usize, usize)> = HashSet::new();
+    for (mut y, mut x) in coordinates {
+        for &(command, position) in &instructions {
+            match command {
+                "fold along x" => {
+                    if x == position || x > 2 * position {
+                        continue
+                    } else if x > position {
+                        x = 2 * position - x
+                    }
+                },
+                "fold along y" => {
+                    if y == position || y > 2 * position {
+                        continue
+                    } else if y > position {
+                        y = 2 * position - y
+                    }
+                },
+                _ => panic!("Unexpected instruction {}", command)
+            }
+        }
+        folded_coordinates.insert((y, x));
+    }
+
+    folded_coordinates.len()
 }
 
 pub fn part2(input: &str) -> String {
-    let mut map = Array2D::<bool>::filled_with(false, 3000, 3000);
 
-    let (coordinates, instructions) = input.split_once("\n\n").unwrap();
+    let (coordinates_str, instructions_str) = input.split_once("\n\n").unwrap();
 
-    coordinates.lines()
-        .map(|coordinate| coordinate.split(',').map(|c| c.parse::<usize>().unwrap()).collect::<Vec<_>>() )
-        .map(|coordinate| (coordinate[1], coordinate[0]))
-        .for_each(|coordinate| map[coordinate] = true);
-
-    let final_map = instructions
+    let instructions = instructions_str
         .lines()
-        .fold(map, |map, instruction| {
-            let (command, position_str) = instruction.split_once('=').unwrap();
-            let position = position_str.parse::<usize>().unwrap();
-            match command {
-                "fold along y" => {
-                    let mut new_map = Array2D::<bool>::filled_with(false, position, map.num_columns());
-                    for x in 0..new_map.num_columns() {
-                        for y in 0..new_map.num_rows() {
-                            if y < position {
-                                if y <= 2*position && map[(2 * position - y, x)] {
-                                    new_map[(y, x)] = true
-                                } else {
-                                    new_map[(y,x)] = map[(y,x)]
-                                }
-                            }
-                        }
-                    }
-                    new_map
-                }
-                "fold along x" => {
-                    let mut new_map = Array2D::<bool>::filled_with(false, map.num_rows(), position);
-                    for x in 0..map.num_columns() {
-                        for y in 0..map.num_rows() {
-                            if x < position {
-                                if x <= 2*position && map[(y, 2 * position - x)] {
-                                    new_map[(y, x)] = true
-                                } else {
-                                    new_map[(y,x)] = map[(y,x)]
-                                }
-                            }
-                        }
-                    }
-                    new_map
-                }
-                c => { panic!("Expected fold along x/y, got {}", c) }
-            }
-        });
+        .map(|line| line.split_once('=').unwrap())
+        .map(|(command, position_str)| (command, position_str.parse::<usize>().unwrap()))
+        .collect::<Vec<_>>();
 
-    final_map.rows_iter()
-        .map(|row| row.map(|c| if *c { '#' } else { '.' }).collect::<String>())
+    let coordinates = coordinates_str.lines()
+        .map(|coordinate| coordinate.split_once(',').unwrap())
+        .map(|(x, y)| (y.parse::<usize>().unwrap(), x.parse::<usize>().unwrap()));
+
+    let mut width = 0;
+    let mut height = 0;
+    let mut folded_coordinates: Vec<(usize, usize)> = Vec::new();
+
+    for (mut y, mut x) in coordinates {
+        for &(command, position) in &instructions {
+            match command {
+                "fold along x" => {
+                    if x == position || x > 2 * position {
+                        continue
+                    } else if x > position {
+                        x = 2 * position - x
+                    }
+                    width = position
+                },
+                "fold along y" => {
+                    if y == position || y > 2 * position {
+                        continue
+                    } else if y > position {
+                        y = 2 * position - y
+                    }
+                    height = position
+                },
+                _ => panic!("Unexpected instruction {}", command)
+            }
+        }
+        folded_coordinates.push((y, x))
+    }
+
+    let mut map = Array2D::<char>::filled_with('.', height, width);
+    folded_coordinates.iter().for_each(|&folded_coordinate| map[folded_coordinate] = '#');
+
+    map.rows_iter()
+        .map(|row| row.collect::<String>())
         .collect::<Vec<String>>()
         .join("\n")
 }
