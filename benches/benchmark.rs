@@ -241,6 +241,19 @@ fn day15_benchmark(c: &mut Criterion) {
     });
 }
 
+fn day16_benchmark(c: &mut Criterion) {
+    c.bench_function("Day 16 - Part 1", |b| {
+        b.iter(|| {
+            day16::part1(include_str!("../inputs/day16"));
+        })
+    });
+    c.bench_function("Day 16 - Part 2", |b| {
+        b.iter(|| {
+            day16::part2(include_str!("../inputs/day16"));
+        })
+    });
+}
+
 criterion_group!(
     benchmark,
     day1_benchmark,
@@ -258,6 +271,7 @@ criterion_group!(
     day12_benchmark,
     day13_benchmark,
     day14_benchmark,
-    day15_benchmark
+    day15_benchmark,
+    day16_benchmark,
 );
 criterion_main!(benchmark);

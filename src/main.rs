@@ -109,6 +109,15 @@ fn main() {
         "Day 15 - Part 2: {}",
         day15::part2(include_str!("../inputs/day15"))
     );
+
+    println!(
+        "Day 16 - Part 1: {}",
+        day16::part1(include_str!("../inputs/day16"))
+    );
+    println!(
+        "Day 16 - Part 2: {}",
+        day16::part2(include_str!("../inputs/day16"))
+    );
 }
 
 #[cfg(test)]
@@ -218,5 +227,11 @@ mod tests {
     fn test_day_15() {
         assert_eq!(day15::part1(include_str!("../inputs/day15")), 698);
         assert_eq!(day15::part2(include_str!("../inputs/day15")), 3022);
+    }
+
+    #[test]
+    fn test_day_16() {
+        assert_eq!(day16::part1(include_str!("../inputs/day16")), 1038);
+        assert_eq!(day16::part2(include_str!("../inputs/day16")), 246761930504);
     }
 }
