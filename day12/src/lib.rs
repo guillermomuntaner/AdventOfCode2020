@@ -14,11 +14,7 @@ pub fn part1(input: &str) -> usize {
             multi_map.entry(end).or_default().insert(start);
         });
 
-    fn seek(
-        start: &str,
-        multi_map: &HashMap<&str, HashSet<&str>>,
-        small_caves_visited: &HashSet<&str>,
-    ) -> usize {
+    fn seek(start: &str, multi_map: &HashMap<&str, HashSet<&str>>, small_caves_visited: &HashSet<&str>) -> usize {
         let mut count = 0;
         for &destination in multi_map.get(start).unwrap_or(&HashSet::new()) {
             if destination == "end" {
@@ -71,22 +67,12 @@ pub fn part2(input: &str) -> usize {
                 if !small_caves_visited.contains(destination) {
                     let mut small_caves_visited = small_caves_visited.clone();
                     small_caves_visited.insert(destination);
-                    count += seek(
-                        destination,
-                        multi_map,
-                        &small_caves_visited,
-                        used_double_visit,
-                    );
+                    count += seek(destination, multi_map, &small_caves_visited, used_double_visit);
                 } else if !used_double_visit {
                     count += seek(destination, multi_map, &small_caves_visited, true);
                 }
             } else {
-                count += seek(
-                    destination,
-                    multi_map,
-                    small_caves_visited,
-                    used_double_visit,
-                );
+                count += seek(destination, multi_map, small_caves_visited, used_double_visit);
             }
         }
         count

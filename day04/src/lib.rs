@@ -164,10 +164,7 @@ fn scratch_number_and_call(number: u32, board: &mut Array2D<Option<u32>>) -> boo
 }
 
 fn count_non_scratched(board: &Array2D<Option<u32>>) -> u32 {
-    board
-        .elements_column_major_iter()
-        .filter_map(|number| *number)
-        .sum()
+    board.elements_column_major_iter().filter_map(|number| *number).sum()
 }
 
 #[cfg(test)]

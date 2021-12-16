@@ -95,8 +95,7 @@ fn parse_packet(iterator: &mut impl Iterator<Item = char>) -> (usize, usize, usi
                     value.push(iterator.next().unwrap());
                     body_bit_count += 1;
                 }
-                let length_in_bits =
-                    usize::from_str_radix(&value.iter().collect::<String>(), 2).unwrap();
+                let length_in_bits = usize::from_str_radix(&value.iter().collect::<String>(), 2).unwrap();
 
                 let mut values: Vec<usize> = Vec::new();
                 let mut sub_packages_bit_count = 0_usize;
@@ -123,8 +122,7 @@ fn parse_packet(iterator: &mut impl Iterator<Item = char>) -> (usize, usize, usi
                     value.push(iterator.next().unwrap());
                     body_bit_count += 1;
                 }
-                let number_of_sub_packets =
-                    u8::from_str_radix(&value.iter().collect::<String>(), 2).unwrap();
+                let number_of_sub_packets = u8::from_str_radix(&value.iter().collect::<String>(), 2).unwrap();
 
                 let mut values: Vec<usize> = Vec::new();
                 for _ in 0..number_of_sub_packets {

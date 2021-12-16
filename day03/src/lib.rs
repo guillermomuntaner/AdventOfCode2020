@@ -134,8 +134,7 @@ pub fn part2(input: &[String]) -> u32 {
             .filter(|bit| *bit == 1)
             .count();
 
-        let most_common_bit = if ones_count as f32 >= (input_filtered_for_oxygen.len() as f32) / 2.0
-        {
+        let most_common_bit = if ones_count as f32 >= (input_filtered_for_oxygen.len() as f32) / 2.0 {
             1
         } else {
             0
@@ -174,8 +173,7 @@ mod tests {
     #[test]
     fn test_part1() {
         let sample_input: Vec<String> = vec![
-            "00100", "11110", "10110", "10111", "10101", "01111", "00111", "11100", "10000",
-            "11001", "00010", "01010",
+            "00100", "11110", "10110", "10111", "10101", "01111", "00111", "11100", "10000", "11001", "00010", "01010",
         ]
         .iter()
         .map(|line| line.to_string())
@@ -187,8 +185,7 @@ mod tests {
     #[test]
     fn test_part2() {
         let sample_input: Vec<String> = vec![
-            "00100", "11110", "10110", "10111", "10101", "01111", "00111", "11100", "10000",
-            "11001", "00010", "01010",
+            "00100", "11110", "10110", "10111", "10101", "01111", "00111", "11100", "10000", "11001", "00010", "01010",
         ]
         .iter()
         .map(|line| line.to_string())

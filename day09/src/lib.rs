@@ -25,11 +25,7 @@ pub fn part1(input: &str) -> u32 {
                     let is_within = (0..map.num_columns() as i32).contains(&adjacent_coordinate.0)
                         && (0..map.num_rows() as i32).contains(&adjacent_coordinate.1);
                     if is_within {
-                        map[(y, x)]
-                            < map[(
-                                adjacent_coordinate.1 as usize,
-                                adjacent_coordinate.0 as usize,
-                            )]
+                        map[(y, x)] < map[(adjacent_coordinate.1 as usize, adjacent_coordinate.0 as usize)]
                     } else {
                         true
                     }
@@ -75,19 +71,9 @@ pub fn part2(input: &str) -> usize {
                 (0..map.num_columns() as i32).contains(&adjacent_coordinate.0)
                     && (0..map.num_rows() as i32).contains(&adjacent_coordinate.1)
             })
+            .map(|adjacent_coordinate| (adjacent_coordinate.0 as usize, adjacent_coordinate.1 as usize))
             .map(|adjacent_coordinate| {
-                (
-                    adjacent_coordinate.0 as usize,
-                    adjacent_coordinate.1 as usize,
-                )
-            })
-            .map(|adjacent_coordinate| {
-                check_for_basin(
-                    adjacent_coordinate.0,
-                    adjacent_coordinate.1,
-                    map,
-                    known_basin_points,
-                )
+                check_for_basin(adjacent_coordinate.0, adjacent_coordinate.1, map, known_basin_points)
             })
             .sum::<usize>();
     }

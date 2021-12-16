@@ -33,22 +33,14 @@ pub fn part1(crabs: &mut [u64]) -> u64 {
     // Note: select_nth_unstable is a faster alternative to find the nth sorted element.
     // It doesn't sort the whole array, just enought to grant the solicited index & is optimized for it.
     let median = *crabs.select_nth_unstable(crabs.len() / 2).1;
-    return crabs
-        .iter()
-        .map(|crab| abs_diff(*crab, median))
-        .sum::<u64>();
+    return crabs.iter().map(|crab| abs_diff(*crab, median)).sum::<u64>();
 }
 
 pub fn part1_naive(crabs: &[u64]) -> u64 {
     let min = crabs.iter().min().unwrap();
     let max = crabs.iter().max().unwrap();
     return (*min..=*max)
-        .map(|position| {
-            crabs
-                .iter()
-                .map(|val| abs_diff(position, *val))
-                .sum::<u64>()
-        })
+        .map(|position| crabs.iter().map(|val| abs_diff(position, *val)).sum::<u64>())
         .min()
         .unwrap();
 }

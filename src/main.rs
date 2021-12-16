@@ -1,21 +1,9 @@
 fn main() {
-    println!(
-        "Day 1 - Part 1: {}",
-        day01::part1(include_str!("../inputs/day01"))
-    );
-    println!(
-        "Day 1 - Part 2: {}",
-        day01::part2(include_str!("../inputs/day01"))
-    );
+    println!("Day 1 - Part 1: {}", day01::part1(include_str!("../inputs/day01")));
+    println!("Day 1 - Part 2: {}", day01::part2(include_str!("../inputs/day01")));
 
-    println!(
-        "Day 2 - Part 1: {}",
-        day02::part1(include_str!("../inputs/day02"))
-    );
-    println!(
-        "Day 2 - Part 2: {}",
-        day02::part2(include_str!("../inputs/day02"))
-    );
+    println!("Day 2 - Part 1: {}", day02::part1(include_str!("../inputs/day02")));
+    println!("Day 2 - Part 2: {}", day02::part2(include_str!("../inputs/day02")));
 
     let day3_input = inpututils::read_lines("inputs/day03");
     println!("Day 3 - Part 1: {}", day03::part1(&day3_input));
@@ -38,86 +26,32 @@ fn main() {
     println!("Day 7 - Part 1: {}", day07::part1(&mut day7_pt1_input));
     println!("Day 7 - Part 2: {}", day07::part2(&day7_input));
 
-    println!(
-        "Day 8 - Part 1: {}",
-        day08::part1(include_str!("../inputs/day08"))
-    );
-    println!(
-        "Day 8 - Part 2: {}",
-        day08::part2(include_str!("../inputs/day08"))
-    );
+    println!("Day 8 - Part 1: {}", day08::part1(include_str!("../inputs/day08")));
+    println!("Day 8 - Part 2: {}", day08::part2(include_str!("../inputs/day08")));
 
-    println!(
-        "Day 9 - Part 1: {}",
-        day09::part1(include_str!("../inputs/day09"))
-    );
-    println!(
-        "Day 9 - Part 2: {}",
-        day09::part2(include_str!("../inputs/day09"))
-    );
+    println!("Day 9 - Part 1: {}", day09::part1(include_str!("../inputs/day09")));
+    println!("Day 9 - Part 2: {}", day09::part2(include_str!("../inputs/day09")));
 
-    println!(
-        "Day 10 - Part 1: {}",
-        day10::part1(include_str!("../inputs/day10"))
-    );
-    println!(
-        "Day 10 - Part 2: {}",
-        day10::part2(include_str!("../inputs/day10"))
-    );
+    println!("Day 10 - Part 1: {}", day10::part1(include_str!("../inputs/day10")));
+    println!("Day 10 - Part 2: {}", day10::part2(include_str!("../inputs/day10")));
 
-    println!(
-        "Day 11 - Part 1: {}",
-        day11::part1(include_str!("../inputs/day11"))
-    );
-    println!(
-        "Day 11 - Part 2: {}",
-        day11::part2(include_str!("../inputs/day11"))
-    );
+    println!("Day 11 - Part 1: {}", day11::part1(include_str!("../inputs/day11")));
+    println!("Day 11 - Part 2: {}", day11::part2(include_str!("../inputs/day11")));
 
-    println!(
-        "Day 12 - Part 1: {}",
-        day12::part1(include_str!("../inputs/day12"))
-    );
-    println!(
-        "Day 12 - Part 2: {}",
-        day12::part2(include_str!("../inputs/day12"))
-    );
+    println!("Day 12 - Part 1: {}", day12::part1(include_str!("../inputs/day12")));
+    println!("Day 12 - Part 2: {}", day12::part2(include_str!("../inputs/day12")));
 
-    println!(
-        "Day 13 - Part 1: {}",
-        day13::part1(include_str!("../inputs/day13"))
-    );
-    println!(
-        "Day 13 - Part 2: {}",
-        day13::part2(include_str!("../inputs/day13"))
-    );
+    println!("Day 13 - Part 1: {}", day13::part1(include_str!("../inputs/day13")));
+    println!("Day 13 - Part 2: {}", day13::part2(include_str!("../inputs/day13")));
 
-    println!(
-        "Day 14 - Part 1: {}",
-        day14::part1(include_str!("../inputs/day14"))
-    );
-    println!(
-        "Day 14 - Part 2: {}",
-        day14::part2(include_str!("../inputs/day14"))
-    );
+    println!("Day 14 - Part 1: {}", day14::part1(include_str!("../inputs/day14")));
+    println!("Day 14 - Part 2: {}", day14::part2(include_str!("../inputs/day14")));
 
-    println!(
-        "Day 15 - Part 1: {}",
-        day15::part1(include_str!("../inputs/day15"))
-    );
-    println!(
-        "Day 15 - Part 2: {}",
-        day15::part2(include_str!("../inputs/day15"))
-    );
+    println!("Day 15 - Part 1: {}", day15::part1(include_str!("../inputs/day15")));
+    println!("Day 15 - Part 2: {}", day15::part2(include_str!("../inputs/day15")));
 
-    println!(
-        "Day 16 - Part 1: {}",
-        day16::part1(include_str!("../inputs/day16"))
-    );
-    println!(
-        "Day 16 - Part 2: {}",
-        day16::part2(include_str!("../inputs/day16"))
-    );
+    println!("Day 16 - Part 1: {}", day16::part1(include_str!("../inputs/day16")));
+    println!("Day 16 - Part 2: {}", day16::part2(include_str!("../inputs/day16")));
 }
 
 #[cfg(test)]

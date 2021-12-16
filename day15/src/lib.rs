@@ -1,10 +1,7 @@
 use std::cmp::Ordering;
 use std::collections::{BinaryHeap, HashMap, HashSet};
 
-fn dijkstra(
-    start: Vertex,
-    adjacency_list: &HashMap<Vertex, Vec<(Vertex, usize)>>,
-) -> HashMap<Vertex, usize> {
+fn dijkstra(start: Vertex, adjacency_list: &HashMap<Vertex, Vec<(Vertex, usize)>>) -> HashMap<Vertex, usize> {
     let mut distances = HashMap::new();
     let mut visited = HashSet::new();
     let mut to_visit = BinaryHeap::new();
@@ -24,9 +21,7 @@ fn dijkstra(
         if let Some(neighbors) = adjacency_list.get(&vertex) {
             for (neighbor, cost) in neighbors {
                 let new_distance = distance + cost;
-                let is_shorter = distances
-                    .get(&neighbor)
-                    .map_or(true, |&current| new_distance < current);
+                let is_shorter = distances.get(&neighbor).map_or(true, |&current| new_distance < current);
 
                 if is_shorter {
                     distances.insert(*neighbor, new_distance);
@@ -117,9 +112,7 @@ pub fn part1(input: &str) -> usize {
 
     let distances = dijkstra(map[0][0].0, &adjacency_list);
 
-    *distances
-        .get(&map.last().unwrap().last().unwrap().0)
-        .unwrap()
+    *distances.get(&map.last().unwrap().last().unwrap().0).unwrap()
 }
 
 pub fn part2(input: &str) -> usize {
@@ -180,9 +173,7 @@ pub fn part2(input: &str) -> usize {
 
     let distances = dijkstra(enlarged_map[0][0].0, &adjacency_list);
 
-    *distances
-        .get(&enlarged_map.last().unwrap().last().unwrap().0)
-        .unwrap()
+    *distances.get(&enlarged_map.last().unwrap().last().unwrap().0).unwrap()
 }
 
 #[cfg(test)]

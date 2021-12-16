@@ -13,30 +13,16 @@ pub fn part1(input: &str) -> usize {
 
     let mut map = Array2D::<u32>::from_rows(&lines);
 
-    let neighbours: Vec<(i32, i32)> = vec![
-        (-1, -1),
-        (0, -1),
-        (1, -1),
-        (-1, 0),
-        (1, 0),
-        (-1, 1),
-        (0, 1),
-        (1, 1),
-    ];
+    let neighbours: Vec<(i32, i32)> = vec![(-1, -1), (0, -1), (1, -1), (-1, 0), (1, 0), (-1, 1), (0, 1), (1, 1)];
 
-    fn flash(
-        map: &mut Array2D<u32>,
-        point: (usize, usize),
-        neighbours: &Vec<(i32, i32)>,
-        count: &mut usize,
-    ) {
+    fn flash(map: &mut Array2D<u32>, point: (usize, usize), neighbours: &Vec<(i32, i32)>, count: &mut usize) {
         *count += 1;
         for neighbour in neighbours {
             let adjacent_x = point.1 as i32 + neighbour.0;
             let adjacent_y = point.0 as i32 + neighbour.1;
 
-            let is_within = (0..map.num_columns() as i32).contains(&adjacent_x)
-                && (0..map.num_rows() as i32).contains(&adjacent_y);
+            let is_within =
+                (0..map.num_columns() as i32).contains(&adjacent_x) && (0..map.num_rows() as i32).contains(&adjacent_y);
             if !is_within {
                 continue;
             }
@@ -88,24 +74,15 @@ pub fn part2(input: &str) -> usize {
 
     let mut map = Array2D::<u32>::from_rows(&lines);
 
-    let neighbours: Vec<(i32, i32)> = vec![
-        (-1, -1),
-        (0, -1),
-        (1, -1),
-        (-1, 0),
-        (1, 0),
-        (-1, 1),
-        (0, 1),
-        (1, 1),
-    ];
+    let neighbours: Vec<(i32, i32)> = vec![(-1, -1), (0, -1), (1, -1), (-1, 0), (1, 0), (-1, 1), (0, 1), (1, 1)];
 
     fn flash(map: &mut Array2D<u32>, point: (usize, usize), neighbours: &Vec<(i32, i32)>) {
         for neighbour in neighbours {
             let adjacent_x = point.1 as i32 + neighbour.0;
             let adjacent_y = point.0 as i32 + neighbour.1;
 
-            let is_within = (0..map.num_columns() as i32).contains(&adjacent_x)
-                && (0..map.num_rows() as i32).contains(&adjacent_y);
+            let is_within =
+                (0..map.num_columns() as i32).contains(&adjacent_x) && (0..map.num_rows() as i32).contains(&adjacent_y);
             if !is_within {
                 continue;
             }

@@ -41,10 +41,7 @@
 ///
 /// How many measurements are larger than the previous measurement?
 pub fn part1(input: &str) -> usize {
-    let depth = input
-        .lines()
-        .map(|n| n.parse::<u16>().unwrap())
-        .collect::<Vec<_>>();
+    let depth = input.lines().map(|n| n.parse::<u16>().unwrap()).collect::<Vec<_>>();
 
     let mut count = 0;
     for i in 1..depth.len() {
@@ -98,10 +95,7 @@ pub fn part1_functional(input: &str) -> usize {
 ///
 /// Consider sums of a three-measurement sliding window. How many sums are larger than the previous sum?
 pub fn part2(input: &str) -> u32 {
-    let depth = input
-        .lines()
-        .map(|n| n.parse::<u32>().unwrap())
-        .collect::<Vec<u32>>();
+    let depth = input.lines().map(|n| n.parse::<u32>().unwrap()).collect::<Vec<u32>>();
 
     let mut count = 0;
     for i in 3..depth.len() {

@@ -95,11 +95,7 @@ pub fn part2(input: &str) -> i32 {
         let direction = parts[0];
         let quantity = parts[1].parse::<i32>().unwrap();
         return match direction {
-            "forward" => (
-                position.0 + quantity,
-                position.1 + position.2 * quantity,
-                position.2,
-            ),
+            "forward" => (position.0 + quantity, position.1 + position.2 * quantity, position.2),
             "down" => (position.0, position.1, position.2 + quantity),
             "up" => (position.0, position.1, position.2 - quantity),
             _ => panic!("Unexpected direction"),

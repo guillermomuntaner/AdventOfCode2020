@@ -49,9 +49,7 @@ fn evolve(input: &str, iterations: usize) -> usize {
     for ((e1, _), count) in polymer {
         *histogram.entry(e1).or_insert(0) += count;
     }
-    *histogram
-        .entry(template_str.chars().last().unwrap())
-        .or_insert(0) += 1;
+    *histogram.entry(template_str.chars().last().unwrap()).or_insert(0) += 1;
 
     match histogram.values().minmax() {
         MinMaxResult::MinMax(&min, &max) => max - min,
