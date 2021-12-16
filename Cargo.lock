@@ -21,6 +21,7 @@ dependencies = [
  "day12",
  "day13",
  "day14",
+ "day15",
  "inpututils",
 ]
 
@@ -281,6 +282,13 @@ name = "day14"
 version = "0.1.0"
 dependencies = [
  "itertools",
+]
+
+[[package]]
+name = "day15"
+version = "0.1.0"
+dependencies = [
+ "array2d",
 ]
 
 [[package]]
