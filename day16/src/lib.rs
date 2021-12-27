@@ -1,26 +1,26 @@
-pub fn part1(input: &str) -> u32 {
+pub fn part1(input: &str) -> usize {
     let mut iterator = input.chars().flat_map(to_binary);
     let (version_sum, _, _) = parse_packet(&mut iterator);
     version_sum
 }
 
-pub fn part2(input: &str) -> u64 {
+pub fn part2(input: &str) -> usize {
     let mut iterator = input.chars().flat_map(to_binary);
     let (_, _, value) = parse_packet(&mut iterator);
     value
 }
 
-fn to_binary(hex: char) -> Vec<u32> {
-    let mut bits: Vec<u32> = Vec::new();
+fn to_binary(hex: char) -> Vec<usize> {
+    let mut bits: Vec<usize> = Vec::new();
     let mut decimal = hex.to_digit(16).unwrap();
     for _ in 0..4 {
-        bits.insert(0,decimal % 2);
+        bits.insert(0, (decimal % 2) as usize);
         decimal /= 2
     }
     bits
 }
 
-fn parse_packet(iterator: &mut impl Iterator<Item = u32>) -> (u32, u32, u64) {
+fn parse_packet(iterator: &mut impl Iterator<Item = usize>) -> (usize, usize, usize) {
     let mut version = 0;
     for _ in 0..3 {
         version = (version << 1) + iterator.next().unwrap()
@@ -55,13 +55,13 @@ fn parse_packet(iterator: &mut impl Iterator<Item = u32>) -> (u32, u32, u64) {
         }
         body_bit_count += filling_zeros;
 
-        literal_value as u64
+        literal_value as usize
     } else {
         // Operator
         let lenght_type_id = iterator.next().unwrap();
         body_bit_count += 1;
 
-        let values: Vec<u64> = match lenght_type_id {
+        let values: Vec<usize> = match lenght_type_id {
             0 => {
                 // If the length type ID is 0, then the next 15 bits are a number that represents
                 // the total length in bits of the sub-packets contained by this packet.
@@ -71,7 +71,7 @@ fn parse_packet(iterator: &mut impl Iterator<Item = u32>) -> (u32, u32, u64) {
                 }
                 body_bit_count += 15;
 
-                let mut values: Vec<u64> = Vec::new();
+                let mut values: Vec<usize> = Vec::new();
                 let mut sub_packages_bit_count = 0;
                 while sub_packages_bit_count < length_in_bits {
                     let (version, bit_count, value) = parse_packet(iterator);
@@ -114,9 +114,9 @@ fn parse_packet(iterator: &mut impl Iterator<Item = u32>) -> (u32, u32, u64) {
             1 => values.iter().product(),
             2 => *values.iter().min().unwrap(),
             3 => *values.iter().max().unwrap(),
-            5 => (values[0] > values[1]) as u64,
-            6 => (values[0] < values[1]) as u64,
-            7 => (values[0] == values[1]) as u64,
+            5 => (values[0] > values[1]) as usize,
+            6 => (values[0] < values[1]) as usize,
+            7 => (values[0] == values[1]) as usize,
             _ => panic!("Unexpected lenght_type_id={}", lenght_type_id),
         }
     };
