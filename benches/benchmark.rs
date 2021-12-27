@@ -254,6 +254,32 @@ fn day16_benchmark(c: &mut Criterion) {
     });
 }
 
+fn day17_benchmark(c: &mut Criterion) {
+    c.bench_function("Day 17 - Part 1", |b| {
+        b.iter(|| {
+            day17::part1(include_str!("../inputs/day17"));
+        })
+    });
+    c.bench_function("Day 17 - Part 2", |b| {
+        b.iter(|| {
+            day17::part2(include_str!("../inputs/day17"));
+        })
+    });
+}
+
+fn day18_benchmark(c: &mut Criterion) {
+    c.bench_function("Day 18 - Part 1", |b| {
+        b.iter(|| {
+            day18::part1(include_str!("../inputs/day18"));
+        })
+    });
+    c.bench_function("Day 18 - Part 2", |b| {
+        b.iter(|| {
+            day18::part2(include_str!("../inputs/day18"));
+        })
+    });
+}
+
 criterion_group!(
     benchmark,
     day1_benchmark,
@@ -273,5 +299,7 @@ criterion_group!(
     day14_benchmark,
     day15_benchmark,
     day16_benchmark,
+    day17_benchmark,
+    day18_benchmark,
 );
 criterion_main!(benchmark);

@@ -7,7 +7,11 @@ pub fn part2(input: &str) -> usize {
 }
 
 fn launch_probe(input: &str) -> (i64, usize) {
-    let (x_range, y_range) = input.strip_prefix("target area: x=").unwrap().split_once(", y=").unwrap();
+    let (x_range, y_range) = input
+        .strip_prefix("target area: x=")
+        .unwrap()
+        .split_once(", y=")
+        .unwrap();
     let (min_x, max_x) = x_range.split_once("..").unwrap();
     let (min_y, max_y) = y_range.split_once("..").unwrap();
     let min_x = min_x.parse::<i64>().unwrap();
@@ -35,16 +39,16 @@ fn launch_probe(input: &str) -> (i64, usize) {
             let mut vy = ivy;
             let mut highest_y = y;
             for _ in 0..1000 {
-                x = x + vx;
-                y = y + vy;
+                x += vx;
+                y += vy;
                 vx = if vx > 0 {
                     vx - 1
-                } else if vx < 0 {
-                    vx + 1
-                } else {
+                } else if vx >= 0 {
                     0
+                } else {
+                    vx + 1
                 };
-                vy = vy - 1;
+                vy -= 1;
 
                 if y > highest_y {
                     highest_y = y;
@@ -54,13 +58,16 @@ fn launch_probe(input: &str) -> (i64, usize) {
                     if x <= max_x && y >= min_y {
                         successful_max_height.push(highest_y);
                     }
-                    break
+                    break;
                 }
             }
         }
     }
 
-    (*successful_max_height.iter().max().unwrap(), successful_max_height.len())
+    (
+        *successful_max_height.iter().max().unwrap(),
+        successful_max_height.len(),
+    )
 }
 #[cfg(test)]
 mod tests {
